@@ -21,7 +21,10 @@ var _ MappedNullable = &ValidationError{}
 type ValidationError struct {
 	Field *string `json:"field,omitempty"`
 	Message *string `json:"message,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _ValidationError ValidationError
 
 // NewValidationError instantiates a new ValidationError object
 // This constructor will assign default values to properties that have it defined,
@@ -120,7 +123,34 @@ func (o ValidationError) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Message) {
 		toSerialize["message"] = o.Message
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *ValidationError) UnmarshalJSON(data []byte) (err error) {
+	varValidationError := _ValidationError{}
+
+	err = json.Unmarshal(data, &varValidationError)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ValidationError(varValidationError)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "field")
+		delete(additionalProperties, "message")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableValidationError struct {

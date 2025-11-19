@@ -22,7 +22,10 @@ type ScheduledTaskCreateResponse struct {
 	Data *TaskCreate `json:"data,omitempty"`
 	// Links to related endpoints.
 	Links *map[string]string `json:"_links,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _ScheduledTaskCreateResponse ScheduledTaskCreateResponse
 
 // NewScheduledTaskCreateResponse instantiates a new ScheduledTaskCreateResponse object
 // This constructor will assign default values to properties that have it defined,
@@ -121,7 +124,34 @@ func (o ScheduledTaskCreateResponse) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Links) {
 		toSerialize["_links"] = o.Links
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *ScheduledTaskCreateResponse) UnmarshalJSON(data []byte) (err error) {
+	varScheduledTaskCreateResponse := _ScheduledTaskCreateResponse{}
+
+	err = json.Unmarshal(data, &varScheduledTaskCreateResponse)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ScheduledTaskCreateResponse(varScheduledTaskCreateResponse)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "data")
+		delete(additionalProperties, "_links")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableScheduledTaskCreateResponse struct {

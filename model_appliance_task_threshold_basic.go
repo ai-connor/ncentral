@@ -22,7 +22,10 @@ type ApplianceTaskThresholdBasic struct {
 	State *string `json:"state,omitempty"`
 	LowValue *int32 `json:"lowValue,omitempty"`
 	HighValue *int32 `json:"highValue,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _ApplianceTaskThresholdBasic ApplianceTaskThresholdBasic
 
 // NewApplianceTaskThresholdBasic instantiates a new ApplianceTaskThresholdBasic object
 // This constructor will assign default values to properties that have it defined,
@@ -156,7 +159,35 @@ func (o ApplianceTaskThresholdBasic) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.HighValue) {
 		toSerialize["highValue"] = o.HighValue
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *ApplianceTaskThresholdBasic) UnmarshalJSON(data []byte) (err error) {
+	varApplianceTaskThresholdBasic := _ApplianceTaskThresholdBasic{}
+
+	err = json.Unmarshal(data, &varApplianceTaskThresholdBasic)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ApplianceTaskThresholdBasic(varApplianceTaskThresholdBasic)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "state")
+		delete(additionalProperties, "lowValue")
+		delete(additionalProperties, "highValue")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableApplianceTaskThresholdBasic struct {

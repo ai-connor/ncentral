@@ -22,7 +22,10 @@ type ScheduledTaskInfoResponse struct {
 	Data *TaskInfo `json:"data,omitempty"`
 	// Links to related endpoints.
 	Links *map[string]string `json:"_links,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _ScheduledTaskInfoResponse ScheduledTaskInfoResponse
 
 // NewScheduledTaskInfoResponse instantiates a new ScheduledTaskInfoResponse object
 // This constructor will assign default values to properties that have it defined,
@@ -121,7 +124,34 @@ func (o ScheduledTaskInfoResponse) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Links) {
 		toSerialize["_links"] = o.Links
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *ScheduledTaskInfoResponse) UnmarshalJSON(data []byte) (err error) {
+	varScheduledTaskInfoResponse := _ScheduledTaskInfoResponse{}
+
+	err = json.Unmarshal(data, &varScheduledTaskInfoResponse)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ScheduledTaskInfoResponse(varScheduledTaskInfoResponse)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "data")
+		delete(additionalProperties, "_links")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableScheduledTaskInfoResponse struct {

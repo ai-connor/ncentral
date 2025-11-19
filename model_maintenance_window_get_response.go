@@ -39,7 +39,10 @@ type MaintenanceWindowGetResponse struct {
 	PreserveStateEnabled *bool `json:"preserveStateEnabled,omitempty"`
 	RuleID *int32 `json:"ruleID,omitempty"`
 	RuleName *string `json:"ruleName,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _MaintenanceWindowGetResponse MaintenanceWindowGetResponse
 
 // NewMaintenanceWindowGetResponse instantiates a new MaintenanceWindowGetResponse object
 // This constructor will assign default values to properties that have it defined,
@@ -768,7 +771,52 @@ func (o MaintenanceWindowGetResponse) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.RuleName) {
 		toSerialize["ruleName"] = o.RuleName
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *MaintenanceWindowGetResponse) UnmarshalJSON(data []byte) (err error) {
+	varMaintenanceWindowGetResponse := _MaintenanceWindowGetResponse{}
+
+	err = json.Unmarshal(data, &varMaintenanceWindowGetResponse)
+
+	if err != nil {
+		return err
+	}
+
+	*o = MaintenanceWindowGetResponse(varMaintenanceWindowGetResponse)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "scheduleID")
+		delete(additionalProperties, "userName")
+		delete(additionalProperties, "lastUpdated")
+		delete(additionalProperties, "applicableAction")
+		delete(additionalProperties, "name")
+		delete(additionalProperties, "type")
+		delete(additionalProperties, "cron")
+		delete(additionalProperties, "duration")
+		delete(additionalProperties, "enabled")
+		delete(additionalProperties, "maxDowntime")
+		delete(additionalProperties, "rebootMethod")
+		delete(additionalProperties, "rebootDelay")
+		delete(additionalProperties, "downtimeOnAction")
+		delete(additionalProperties, "userMessageEnabled")
+		delete(additionalProperties, "userMessage")
+		delete(additionalProperties, "messageSenderEnabled")
+		delete(additionalProperties, "messageSender")
+		delete(additionalProperties, "preserveStateEnabled")
+		delete(additionalProperties, "ruleID")
+		delete(additionalProperties, "ruleName")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableMaintenanceWindowGetResponse struct {

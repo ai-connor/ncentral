@@ -35,7 +35,10 @@ type DetailsResponse struct {
 	Message *string `json:"message,omitempty"`
 	// Output file name.
 	OutputFileName *string `json:"outputFileName,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _DetailsResponse DetailsResponse
 
 // NewDetailsResponse instantiates a new DetailsResponse object
 // This constructor will assign default values to properties that have it defined,
@@ -344,7 +347,40 @@ func (o DetailsResponse) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.OutputFileName) {
 		toSerialize["outputFileName"] = o.OutputFileName
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *DetailsResponse) UnmarshalJSON(data []byte) (err error) {
+	varDetailsResponse := _DetailsResponse{}
+
+	err = json.Unmarshal(data, &varDetailsResponse)
+
+	if err != nil {
+		return err
+	}
+
+	*o = DetailsResponse(varDetailsResponse)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "taskId")
+		delete(additionalProperties, "deviceId")
+		delete(additionalProperties, "deviceName")
+		delete(additionalProperties, "taskName")
+		delete(additionalProperties, "status")
+		delete(additionalProperties, "output")
+		delete(additionalProperties, "message")
+		delete(additionalProperties, "outputFileName")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableDetailsResponse struct {

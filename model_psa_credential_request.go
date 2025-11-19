@@ -21,7 +21,10 @@ var _ MappedNullable = &PsaCredentialRequest{}
 type PsaCredentialRequest struct {
 	Username *string `json:"username,omitempty"`
 	Password *string `json:"password,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _PsaCredentialRequest PsaCredentialRequest
 
 // NewPsaCredentialRequest instantiates a new PsaCredentialRequest object
 // This constructor will assign default values to properties that have it defined,
@@ -120,7 +123,34 @@ func (o PsaCredentialRequest) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Password) {
 		toSerialize["password"] = o.Password
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *PsaCredentialRequest) UnmarshalJSON(data []byte) (err error) {
+	varPsaCredentialRequest := _PsaCredentialRequest{}
+
+	err = json.Unmarshal(data, &varPsaCredentialRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = PsaCredentialRequest(varPsaCredentialRequest)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "username")
+		delete(additionalProperties, "password")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullablePsaCredentialRequest struct {

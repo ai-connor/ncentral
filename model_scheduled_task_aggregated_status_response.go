@@ -22,7 +22,10 @@ type ScheduledTaskAggregatedStatusResponse struct {
 	Data *TaskAggregatedStatus `json:"data,omitempty"`
 	// Links to related endpoints.
 	Links *map[string]string `json:"_links,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _ScheduledTaskAggregatedStatusResponse ScheduledTaskAggregatedStatusResponse
 
 // NewScheduledTaskAggregatedStatusResponse instantiates a new ScheduledTaskAggregatedStatusResponse object
 // This constructor will assign default values to properties that have it defined,
@@ -121,7 +124,34 @@ func (o ScheduledTaskAggregatedStatusResponse) ToMap() (map[string]interface{}, 
 	if !IsNil(o.Links) {
 		toSerialize["_links"] = o.Links
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *ScheduledTaskAggregatedStatusResponse) UnmarshalJSON(data []byte) (err error) {
+	varScheduledTaskAggregatedStatusResponse := _ScheduledTaskAggregatedStatusResponse{}
+
+	err = json.Unmarshal(data, &varScheduledTaskAggregatedStatusResponse)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ScheduledTaskAggregatedStatusResponse(varScheduledTaskAggregatedStatusResponse)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "data")
+		delete(additionalProperties, "_links")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableScheduledTaskAggregatedStatusResponse struct {

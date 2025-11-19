@@ -12,7 +12,6 @@ package ncentral
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -29,6 +28,7 @@ type DeviceAccessGroupCreateRequest struct {
 	DeviceIds []string `json:"deviceIds,omitempty"`
 	// List of user IDs to be associated with the access group.
 	UserIds []string `json:"userIds,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _DeviceAccessGroupCreateRequest DeviceAccessGroupCreateRequest
@@ -182,6 +182,11 @@ func (o DeviceAccessGroupCreateRequest) ToMap() (map[string]interface{}, error) 
 	if !IsNil(o.UserIds) {
 		toSerialize["userIds"] = o.UserIds
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -210,15 +215,23 @@ func (o *DeviceAccessGroupCreateRequest) UnmarshalJSON(data []byte) (err error) 
 
 	varDeviceAccessGroupCreateRequest := _DeviceAccessGroupCreateRequest{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varDeviceAccessGroupCreateRequest)
+	err = json.Unmarshal(data, &varDeviceAccessGroupCreateRequest)
 
 	if err != nil {
 		return err
 	}
 
 	*o = DeviceAccessGroupCreateRequest(varDeviceAccessGroupCreateRequest)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "groupName")
+		delete(additionalProperties, "groupDescription")
+		delete(additionalProperties, "deviceIds")
+		delete(additionalProperties, "userIds")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

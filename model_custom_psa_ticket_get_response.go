@@ -22,7 +22,10 @@ type CustomPsaTicketGetResponse struct {
 	Data *CustomPsaTicketInfo `json:"data,omitempty"`
 	// Links to related endpoints.
 	Links *map[string]string `json:"_links,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _CustomPsaTicketGetResponse CustomPsaTicketGetResponse
 
 // NewCustomPsaTicketGetResponse instantiates a new CustomPsaTicketGetResponse object
 // This constructor will assign default values to properties that have it defined,
@@ -121,7 +124,34 @@ func (o CustomPsaTicketGetResponse) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Links) {
 		toSerialize["_links"] = o.Links
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *CustomPsaTicketGetResponse) UnmarshalJSON(data []byte) (err error) {
+	varCustomPsaTicketGetResponse := _CustomPsaTicketGetResponse{}
+
+	err = json.Unmarshal(data, &varCustomPsaTicketGetResponse)
+
+	if err != nil {
+		return err
+	}
+
+	*o = CustomPsaTicketGetResponse(varCustomPsaTicketGetResponse)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "data")
+		delete(additionalProperties, "_links")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableCustomPsaTicketGetResponse struct {

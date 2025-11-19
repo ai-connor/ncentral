@@ -12,7 +12,6 @@ package ncentral
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -29,6 +28,7 @@ type ScheduledTaskParameter struct {
 	Description string `json:"description"`
 	// The parameter type. Supported values: string, integer, boolean, text, dword.
 	Type string `json:"type"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _ScheduledTaskParameter ScheduledTaskParameter
@@ -173,6 +173,11 @@ func (o ScheduledTaskParameter) ToMap() (map[string]interface{}, error) {
 	}
 	toSerialize["description"] = o.Description
 	toSerialize["type"] = o.Type
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -202,15 +207,23 @@ func (o *ScheduledTaskParameter) UnmarshalJSON(data []byte) (err error) {
 
 	varScheduledTaskParameter := _ScheduledTaskParameter{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varScheduledTaskParameter)
+	err = json.Unmarshal(data, &varScheduledTaskParameter)
 
 	if err != nil {
 		return err
 	}
 
 	*o = ScheduledTaskParameter(varScheduledTaskParameter)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "name")
+		delete(additionalProperties, "value")
+		delete(additionalProperties, "description")
+		delete(additionalProperties, "type")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

@@ -35,7 +35,10 @@ type DeviceServiceMonitoringStatus struct {
 	TransitionTime *string `json:"transitionTime,omitempty"`
 	ApplianceId *int32 `json:"applianceId,omitempty"`
 	ApplianceName *string `json:"applianceName,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _DeviceServiceMonitoringStatus DeviceServiceMonitoringStatus
 
 // NewDeviceServiceMonitoringStatus instantiates a new DeviceServiceMonitoringStatus object
 // This constructor will assign default values to properties that have it defined,
@@ -624,7 +627,48 @@ func (o DeviceServiceMonitoringStatus) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.ApplianceName) {
 		toSerialize["applianceName"] = o.ApplianceName
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *DeviceServiceMonitoringStatus) UnmarshalJSON(data []byte) (err error) {
+	varDeviceServiceMonitoringStatus := _DeviceServiceMonitoringStatus{}
+
+	err = json.Unmarshal(data, &varDeviceServiceMonitoringStatus)
+
+	if err != nil {
+		return err
+	}
+
+	*o = DeviceServiceMonitoringStatus(varDeviceServiceMonitoringStatus)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "taskId")
+		delete(additionalProperties, "serviceId")
+		delete(additionalProperties, "timeToStale")
+		delete(additionalProperties, "taskNote")
+		delete(additionalProperties, "taskIdent")
+		delete(additionalProperties, "stateStatus")
+		delete(additionalProperties, "lastUpdate")
+		delete(additionalProperties, "lastDataId")
+		delete(additionalProperties, "createdOn")
+		delete(additionalProperties, "moduleName")
+		delete(additionalProperties, "serviceItemId")
+		delete(additionalProperties, "lastScanTime")
+		delete(additionalProperties, "isManagedTask")
+		delete(additionalProperties, "transitionTime")
+		delete(additionalProperties, "applianceId")
+		delete(additionalProperties, "applianceName")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableDeviceServiceMonitoringStatus struct {

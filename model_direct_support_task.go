@@ -12,7 +12,6 @@ package ncentral
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -34,6 +33,7 @@ type DirectSupportTask struct {
 	Credential ScheduledTaskCredential `json:"credential"`
 	// The credential setting for the task. For more information about the fields of <a href=\"#model-ScheduledTaskParameter\">ScheduledTaskParameter</a>,     please review its schema below. 
 	Parameters []ScheduledTaskParameter `json:"parameters,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _DirectSupportTask DirectSupportTask
@@ -256,6 +256,11 @@ func (o DirectSupportTask) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Parameters) {
 		toSerialize["parameters"] = o.Parameters
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -288,15 +293,26 @@ func (o *DirectSupportTask) UnmarshalJSON(data []byte) (err error) {
 
 	varDirectSupportTask := _DirectSupportTask{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varDirectSupportTask)
+	err = json.Unmarshal(data, &varDirectSupportTask)
 
 	if err != nil {
 		return err
 	}
 
 	*o = DirectSupportTask(varDirectSupportTask)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "name")
+		delete(additionalProperties, "itemId")
+		delete(additionalProperties, "taskType")
+		delete(additionalProperties, "customerId")
+		delete(additionalProperties, "deviceId")
+		delete(additionalProperties, "credential")
+		delete(additionalProperties, "parameters")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

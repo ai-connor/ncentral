@@ -12,7 +12,6 @@ package ncentral
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -53,6 +52,7 @@ type ServiceOrganizationCreation struct {
 	PostalCode *string `json:"postalCode,omitempty"`
 	// Name of the service organization.
 	SoName string `json:"soName"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _ServiceOrganizationCreation ServiceOrganizationCreation
@@ -617,6 +617,11 @@ func (o ServiceOrganizationCreation) ToMap() (map[string]interface{}, error) {
 		toSerialize["postalCode"] = o.PostalCode
 	}
 	toSerialize["soName"] = o.SoName
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -646,15 +651,35 @@ func (o *ServiceOrganizationCreation) UnmarshalJSON(data []byte) (err error) {
 
 	varServiceOrganizationCreation := _ServiceOrganizationCreation{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varServiceOrganizationCreation)
+	err = json.Unmarshal(data, &varServiceOrganizationCreation)
 
 	if err != nil {
 		return err
 	}
 
 	*o = ServiceOrganizationCreation(varServiceOrganizationCreation)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "contactFirstName")
+		delete(additionalProperties, "contactLastName")
+		delete(additionalProperties, "externalId")
+		delete(additionalProperties, "phone")
+		delete(additionalProperties, "contactTitle")
+		delete(additionalProperties, "contactEmail")
+		delete(additionalProperties, "contactPhone")
+		delete(additionalProperties, "contactPhoneExt")
+		delete(additionalProperties, "contactDepartment")
+		delete(additionalProperties, "street1")
+		delete(additionalProperties, "street2")
+		delete(additionalProperties, "city")
+		delete(additionalProperties, "stateProv")
+		delete(additionalProperties, "country")
+		delete(additionalProperties, "postalCode")
+		delete(additionalProperties, "soName")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

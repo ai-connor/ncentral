@@ -21,7 +21,10 @@ var _ MappedNullable = &ApplicableAction{}
 type ApplicableAction struct {
 	Type *string `json:"type,omitempty"`
 	Actions []Action `json:"actions,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _ApplicableAction ApplicableAction
 
 // NewApplicableAction instantiates a new ApplicableAction object
 // This constructor will assign default values to properties that have it defined,
@@ -120,7 +123,34 @@ func (o ApplicableAction) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Actions) {
 		toSerialize["actions"] = o.Actions
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *ApplicableAction) UnmarshalJSON(data []byte) (err error) {
+	varApplicableAction := _ApplicableAction{}
+
+	err = json.Unmarshal(data, &varApplicableAction)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ApplicableAction(varApplicableAction)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "type")
+		delete(additionalProperties, "actions")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableApplicableAction struct {

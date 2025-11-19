@@ -22,7 +22,10 @@ type DeviceCustomPropertyResponse struct {
 	Data *DefaultDeviceCustomProperty `json:"data,omitempty"`
 	// Links to related endpoints.
 	Links *map[string]string `json:"_links,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _DeviceCustomPropertyResponse DeviceCustomPropertyResponse
 
 // NewDeviceCustomPropertyResponse instantiates a new DeviceCustomPropertyResponse object
 // This constructor will assign default values to properties that have it defined,
@@ -121,7 +124,34 @@ func (o DeviceCustomPropertyResponse) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Links) {
 		toSerialize["_links"] = o.Links
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *DeviceCustomPropertyResponse) UnmarshalJSON(data []byte) (err error) {
+	varDeviceCustomPropertyResponse := _DeviceCustomPropertyResponse{}
+
+	err = json.Unmarshal(data, &varDeviceCustomPropertyResponse)
+
+	if err != nil {
+		return err
+	}
+
+	*o = DeviceCustomPropertyResponse(varDeviceCustomPropertyResponse)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "data")
+		delete(additionalProperties, "_links")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableDeviceCustomPropertyResponse struct {

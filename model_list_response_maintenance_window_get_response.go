@@ -21,7 +21,10 @@ var _ MappedNullable = &ListResponseMaintenanceWindowGetResponse{}
 type ListResponseMaintenanceWindowGetResponse struct {
 	Data []MaintenanceWindowGetResponse `json:"data,omitempty"`
 	TotalItems *int32 `json:"totalItems,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _ListResponseMaintenanceWindowGetResponse ListResponseMaintenanceWindowGetResponse
 
 // NewListResponseMaintenanceWindowGetResponse instantiates a new ListResponseMaintenanceWindowGetResponse object
 // This constructor will assign default values to properties that have it defined,
@@ -120,7 +123,34 @@ func (o ListResponseMaintenanceWindowGetResponse) ToMap() (map[string]interface{
 	if !IsNil(o.TotalItems) {
 		toSerialize["totalItems"] = o.TotalItems
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *ListResponseMaintenanceWindowGetResponse) UnmarshalJSON(data []byte) (err error) {
+	varListResponseMaintenanceWindowGetResponse := _ListResponseMaintenanceWindowGetResponse{}
+
+	err = json.Unmarshal(data, &varListResponseMaintenanceWindowGetResponse)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ListResponseMaintenanceWindowGetResponse(varListResponseMaintenanceWindowGetResponse)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "data")
+		delete(additionalProperties, "totalItems")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableListResponseMaintenanceWindowGetResponse struct {

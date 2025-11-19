@@ -37,7 +37,10 @@ type AccessGroupDetails struct {
 	AutoIncludeNewOrgUnits *bool `json:"autoIncludeNewOrgUnits,omitempty"`
 	// Contains all the details about the access group under the '_extra' field.
 	Extra map[string]map[string]interface{} `json:"_extra,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _AccessGroupDetails AccessGroupDetails
 
 // NewAccessGroupDetails instantiates a new AccessGroupDetails object
 // This constructor will assign default values to properties that have it defined,
@@ -381,7 +384,41 @@ func (o AccessGroupDetails) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Extra) {
 		toSerialize["_extra"] = o.Extra
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *AccessGroupDetails) UnmarshalJSON(data []byte) (err error) {
+	varAccessGroupDetails := _AccessGroupDetails{}
+
+	err = json.Unmarshal(data, &varAccessGroupDetails)
+
+	if err != nil {
+		return err
+	}
+
+	*o = AccessGroupDetails(varAccessGroupDetails)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "groupId")
+		delete(additionalProperties, "orgUnitId")
+		delete(additionalProperties, "groupName")
+		delete(additionalProperties, "groupDescription")
+		delete(additionalProperties, "orgUnitIds")
+		delete(additionalProperties, "deviceIds")
+		delete(additionalProperties, "userIds")
+		delete(additionalProperties, "autoIncludeNewOrgUnits")
+		delete(additionalProperties, "_extra")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableAccessGroupDetails struct {

@@ -21,7 +21,10 @@ var _ MappedNullable = &Data{}
 type Data struct {
 	// Contains the results of the PSA credentials validation.
 	IsPsaCredentialsValid *bool `json:"isPsaCredentialsValid,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _Data Data
 
 // NewData instantiates a new Data object
 // This constructor will assign default values to properties that have it defined,
@@ -85,7 +88,33 @@ func (o Data) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.IsPsaCredentialsValid) {
 		toSerialize["isPsaCredentialsValid"] = o.IsPsaCredentialsValid
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *Data) UnmarshalJSON(data []byte) (err error) {
+	varData := _Data{}
+
+	err = json.Unmarshal(data, &varData)
+
+	if err != nil {
+		return err
+	}
+
+	*o = Data(varData)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "isPsaCredentialsValid")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableData struct {

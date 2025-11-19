@@ -21,7 +21,10 @@ var _ MappedNullable = &ListResponseOrganizationCustomProperty{}
 type ListResponseOrganizationCustomProperty struct {
 	Data []OrganizationCustomProperty `json:"data,omitempty"`
 	TotalItems *int32 `json:"totalItems,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _ListResponseOrganizationCustomProperty ListResponseOrganizationCustomProperty
 
 // NewListResponseOrganizationCustomProperty instantiates a new ListResponseOrganizationCustomProperty object
 // This constructor will assign default values to properties that have it defined,
@@ -120,7 +123,34 @@ func (o ListResponseOrganizationCustomProperty) ToMap() (map[string]interface{},
 	if !IsNil(o.TotalItems) {
 		toSerialize["totalItems"] = o.TotalItems
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *ListResponseOrganizationCustomProperty) UnmarshalJSON(data []byte) (err error) {
+	varListResponseOrganizationCustomProperty := _ListResponseOrganizationCustomProperty{}
+
+	err = json.Unmarshal(data, &varListResponseOrganizationCustomProperty)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ListResponseOrganizationCustomProperty(varListResponseOrganizationCustomProperty)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "data")
+		delete(additionalProperties, "totalItems")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableListResponseOrganizationCustomProperty struct {

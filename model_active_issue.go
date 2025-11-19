@@ -37,7 +37,10 @@ type ActiveIssue struct {
 	ServiceItemId *int32 `json:"serviceItemId,omitempty"`
 	// The _extra information.
 	Extra map[string]map[string]interface{} `json:"_extra,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _ActiveIssue ActiveIssue
 
 // NewActiveIssue instantiates a new ActiveIssue object
 // This constructor will assign default values to properties that have it defined,
@@ -381,7 +384,41 @@ func (o ActiveIssue) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Extra) {
 		toSerialize["_extra"] = o.Extra
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *ActiveIssue) UnmarshalJSON(data []byte) (err error) {
+	varActiveIssue := _ActiveIssue{}
+
+	err = json.Unmarshal(data, &varActiveIssue)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ActiveIssue(varActiveIssue)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "orgUnitId")
+		delete(additionalProperties, "deviceId")
+		delete(additionalProperties, "notificationState")
+		delete(additionalProperties, "serviceId")
+		delete(additionalProperties, "serviceName")
+		delete(additionalProperties, "serviceType")
+		delete(additionalProperties, "taskId")
+		delete(additionalProperties, "serviceItemId")
+		delete(additionalProperties, "_extra")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableActiveIssue struct {

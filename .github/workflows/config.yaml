@@ -5,5 +5,5 @@ globalProperties:
   modelDocs: false
 additionalProperties:
   hideGenerationTimestamp: true
-  packageName: cwapi
+  packageName: ncentral
   disallowAdditionalPropertiesIfNotPresent: false

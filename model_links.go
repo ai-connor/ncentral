@@ -23,7 +23,10 @@ type Links struct {
 	PreviousPage *string `json:"previousPage,omitempty"`
 	NextPage *string `json:"nextPage,omitempty"`
 	LastPage *string `json:"lastPage,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _Links Links
 
 // NewLinks instantiates a new Links object
 // This constructor will assign default values to properties that have it defined,
@@ -192,7 +195,36 @@ func (o Links) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.LastPage) {
 		toSerialize["lastPage"] = o.LastPage
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *Links) UnmarshalJSON(data []byte) (err error) {
+	varLinks := _Links{}
+
+	err = json.Unmarshal(data, &varLinks)
+
+	if err != nil {
+		return err
+	}
+
+	*o = Links(varLinks)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "firstPage")
+		delete(additionalProperties, "previousPage")
+		delete(additionalProperties, "nextPage")
+		delete(additionalProperties, "lastPage")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableLinks struct {

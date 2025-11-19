@@ -20,7 +20,10 @@ var _ MappedNullable = &TaskCreate{}
 // TaskCreate Information about a newly created task
 type TaskCreate struct {
 	TaskId *int32 `json:"taskId,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _TaskCreate TaskCreate
 
 // NewTaskCreate instantiates a new TaskCreate object
 // This constructor will assign default values to properties that have it defined,
@@ -84,7 +87,33 @@ func (o TaskCreate) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.TaskId) {
 		toSerialize["taskId"] = o.TaskId
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *TaskCreate) UnmarshalJSON(data []byte) (err error) {
+	varTaskCreate := _TaskCreate{}
+
+	err = json.Unmarshal(data, &varTaskCreate)
+
+	if err != nil {
+		return err
+	}
+
+	*o = TaskCreate(varTaskCreate)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "taskId")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableTaskCreate struct {

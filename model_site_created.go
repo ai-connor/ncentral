@@ -21,7 +21,10 @@ var _ MappedNullable = &SiteCreated{}
 type SiteCreated struct {
 	// Id of the created site.
 	SiteId *int32 `json:"siteId,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _SiteCreated SiteCreated
 
 // NewSiteCreated instantiates a new SiteCreated object
 // This constructor will assign default values to properties that have it defined,
@@ -85,7 +88,33 @@ func (o SiteCreated) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.SiteId) {
 		toSerialize["siteId"] = o.SiteId
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *SiteCreated) UnmarshalJSON(data []byte) (err error) {
+	varSiteCreated := _SiteCreated{}
+
+	err = json.Unmarshal(data, &varSiteCreated)
+
+	if err != nil {
+		return err
+	}
+
+	*o = SiteCreated(varSiteCreated)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "siteId")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableSiteCreated struct {

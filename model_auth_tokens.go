@@ -12,7 +12,6 @@ package ncentral
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -23,6 +22,7 @@ var _ MappedNullable = &AuthTokens{}
 type AuthTokens struct {
 	Access AuthToken `json:"access"`
 	Refresh AuthToken `json:"refresh"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _AuthTokens AuthTokens
@@ -106,6 +106,11 @@ func (o AuthTokens) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["access"] = o.Access
 	toSerialize["refresh"] = o.Refresh
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -134,15 +139,21 @@ func (o *AuthTokens) UnmarshalJSON(data []byte) (err error) {
 
 	varAuthTokens := _AuthTokens{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varAuthTokens)
+	err = json.Unmarshal(data, &varAuthTokens)
 
 	if err != nil {
 		return err
 	}
 
 	*o = AuthTokens(varAuthTokens)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "access")
+		delete(additionalProperties, "refresh")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

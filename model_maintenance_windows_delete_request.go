@@ -12,7 +12,6 @@ package ncentral
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -23,6 +22,7 @@ var _ MappedNullable = &MaintenanceWindowsDeleteRequest{}
 type MaintenanceWindowsDeleteRequest struct {
 	// Schedule Ids for windows which are to be deleted
 	ScheduleIds []int32 `json:"scheduleIds"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _MaintenanceWindowsDeleteRequest MaintenanceWindowsDeleteRequest
@@ -80,6 +80,11 @@ func (o MaintenanceWindowsDeleteRequest) MarshalJSON() ([]byte, error) {
 func (o MaintenanceWindowsDeleteRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["scheduleIds"] = o.ScheduleIds
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -107,15 +112,20 @@ func (o *MaintenanceWindowsDeleteRequest) UnmarshalJSON(data []byte) (err error)
 
 	varMaintenanceWindowsDeleteRequest := _MaintenanceWindowsDeleteRequest{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varMaintenanceWindowsDeleteRequest)
+	err = json.Unmarshal(data, &varMaintenanceWindowsDeleteRequest)
 
 	if err != nil {
 		return err
 	}
 
 	*o = MaintenanceWindowsDeleteRequest(varMaintenanceWindowsDeleteRequest)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "scheduleIds")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

@@ -20,7 +20,10 @@ var _ MappedNullable = &MaintenanceWindowResponse{}
 // MaintenanceWindowResponse General Response for maintenance window action.
 type MaintenanceWindowResponse struct {
 	Success *bool `json:"success,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _MaintenanceWindowResponse MaintenanceWindowResponse
 
 // NewMaintenanceWindowResponse instantiates a new MaintenanceWindowResponse object
 // This constructor will assign default values to properties that have it defined,
@@ -84,7 +87,33 @@ func (o MaintenanceWindowResponse) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Success) {
 		toSerialize["success"] = o.Success
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *MaintenanceWindowResponse) UnmarshalJSON(data []byte) (err error) {
+	varMaintenanceWindowResponse := _MaintenanceWindowResponse{}
+
+	err = json.Unmarshal(data, &varMaintenanceWindowResponse)
+
+	if err != nil {
+		return err
+	}
+
+	*o = MaintenanceWindowResponse(varMaintenanceWindowResponse)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "success")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableMaintenanceWindowResponse struct {

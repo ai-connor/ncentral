@@ -31,7 +31,10 @@ type UserRoleDetails struct {
 	UserIds []int32 `json:"userIds,omitempty"`
 	// Extra information.
 	Extra map[string]map[string]interface{} `json:"_extra,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _UserRoleDetails UserRoleDetails
 
 // NewUserRoleDetails instantiates a new UserRoleDetails object
 // This constructor will assign default values to properties that have it defined,
@@ -270,7 +273,38 @@ func (o UserRoleDetails) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Extra) {
 		toSerialize["_extra"] = o.Extra
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *UserRoleDetails) UnmarshalJSON(data []byte) (err error) {
+	varUserRoleDetails := _UserRoleDetails{}
+
+	err = json.Unmarshal(data, &varUserRoleDetails)
+
+	if err != nil {
+		return err
+	}
+
+	*o = UserRoleDetails(varUserRoleDetails)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "roleId")
+		delete(additionalProperties, "orgUnitId")
+		delete(additionalProperties, "roleName")
+		delete(additionalProperties, "roleDescription")
+		delete(additionalProperties, "userIds")
+		delete(additionalProperties, "_extra")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableUserRoleDetails struct {

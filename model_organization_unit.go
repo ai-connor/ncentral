@@ -12,7 +12,6 @@ package ncentral
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -61,6 +60,7 @@ type OrganizationUnit struct {
 	Country *string `json:"country,omitempty"`
 	// Postal code of the organization unit location.
 	PostalCode *string `json:"postalCode,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _OrganizationUnit OrganizationUnit
@@ -774,6 +774,11 @@ func (o OrganizationUnit) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.PostalCode) {
 		toSerialize["postalCode"] = o.PostalCode
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -802,15 +807,39 @@ func (o *OrganizationUnit) UnmarshalJSON(data []byte) (err error) {
 
 	varOrganizationUnit := _OrganizationUnit{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varOrganizationUnit)
+	err = json.Unmarshal(data, &varOrganizationUnit)
 
 	if err != nil {
 		return err
 	}
 
 	*o = OrganizationUnit(varOrganizationUnit)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "orgUnitId")
+		delete(additionalProperties, "orgUnitName")
+		delete(additionalProperties, "orgUnitType")
+		delete(additionalProperties, "parentId")
+		delete(additionalProperties, "externalId")
+		delete(additionalProperties, "externalId2")
+		delete(additionalProperties, "contactFirstName")
+		delete(additionalProperties, "contactLastName")
+		delete(additionalProperties, "phone")
+		delete(additionalProperties, "contactTitle")
+		delete(additionalProperties, "contactEmail")
+		delete(additionalProperties, "contactPhone")
+		delete(additionalProperties, "contactPhoneExt")
+		delete(additionalProperties, "contactDepartment")
+		delete(additionalProperties, "street1")
+		delete(additionalProperties, "street2")
+		delete(additionalProperties, "city")
+		delete(additionalProperties, "stateProv")
+		delete(additionalProperties, "country")
+		delete(additionalProperties, "postalCode")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

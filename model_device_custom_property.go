@@ -29,7 +29,10 @@ type DeviceCustomProperty struct {
 	Value *string `json:"value,omitempty"`
 	// The possible value of the property.
 	EnumeratedValueList []string `json:"enumeratedValueList,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _DeviceCustomProperty DeviceCustomProperty
 
 // NewDeviceCustomProperty instantiates a new DeviceCustomProperty object
 // This constructor will assign default values to properties that have it defined,
@@ -233,7 +236,37 @@ func (o DeviceCustomProperty) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.EnumeratedValueList) {
 		toSerialize["enumeratedValueList"] = o.EnumeratedValueList
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *DeviceCustomProperty) UnmarshalJSON(data []byte) (err error) {
+	varDeviceCustomProperty := _DeviceCustomProperty{}
+
+	err = json.Unmarshal(data, &varDeviceCustomProperty)
+
+	if err != nil {
+		return err
+	}
+
+	*o = DeviceCustomProperty(varDeviceCustomProperty)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "propertyId")
+		delete(additionalProperties, "propertyName")
+		delete(additionalProperties, "propertyType")
+		delete(additionalProperties, "value")
+		delete(additionalProperties, "enumeratedValueList")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableDeviceCustomProperty struct {

@@ -21,7 +21,10 @@ var _ MappedNullable = &ListResponseDeviceServiceMonitoringStatus{}
 type ListResponseDeviceServiceMonitoringStatus struct {
 	Data []DeviceServiceMonitoringStatus `json:"data,omitempty"`
 	TotalItems *int32 `json:"totalItems,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _ListResponseDeviceServiceMonitoringStatus ListResponseDeviceServiceMonitoringStatus
 
 // NewListResponseDeviceServiceMonitoringStatus instantiates a new ListResponseDeviceServiceMonitoringStatus object
 // This constructor will assign default values to properties that have it defined,
@@ -120,7 +123,34 @@ func (o ListResponseDeviceServiceMonitoringStatus) ToMap() (map[string]interface
 	if !IsNil(o.TotalItems) {
 		toSerialize["totalItems"] = o.TotalItems
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *ListResponseDeviceServiceMonitoringStatus) UnmarshalJSON(data []byte) (err error) {
+	varListResponseDeviceServiceMonitoringStatus := _ListResponseDeviceServiceMonitoringStatus{}
+
+	err = json.Unmarshal(data, &varListResponseDeviceServiceMonitoringStatus)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ListResponseDeviceServiceMonitoringStatus(varListResponseDeviceServiceMonitoringStatus)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "data")
+		delete(additionalProperties, "totalItems")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableListResponseDeviceServiceMonitoringStatus struct {

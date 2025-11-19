@@ -21,7 +21,10 @@ var _ MappedNullable = &DevicePropertyUpdated{}
 type DevicePropertyUpdated struct {
 	// The list of warnings.
 	Warnings []string `json:"_warnings,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _DevicePropertyUpdated DevicePropertyUpdated
 
 // NewDevicePropertyUpdated instantiates a new DevicePropertyUpdated object
 // This constructor will assign default values to properties that have it defined,
@@ -85,7 +88,33 @@ func (o DevicePropertyUpdated) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Warnings) {
 		toSerialize["_warnings"] = o.Warnings
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *DevicePropertyUpdated) UnmarshalJSON(data []byte) (err error) {
+	varDevicePropertyUpdated := _DevicePropertyUpdated{}
+
+	err = json.Unmarshal(data, &varDevicePropertyUpdated)
+
+	if err != nil {
+		return err
+	}
+
+	*o = DevicePropertyUpdated(varDevicePropertyUpdated)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "_warnings")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableDevicePropertyUpdated struct {

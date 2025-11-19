@@ -21,7 +21,10 @@ var _ MappedNullable = &Health{}
 // Health Response for the server health.
 type Health struct {
 	CurrentTime *time.Time `json:"currentTime,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _Health Health
 
 // NewHealth instantiates a new Health object
 // This constructor will assign default values to properties that have it defined,
@@ -85,7 +88,33 @@ func (o Health) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.CurrentTime) {
 		toSerialize["currentTime"] = o.CurrentTime
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *Health) UnmarshalJSON(data []byte) (err error) {
+	varHealth := _Health{}
+
+	err = json.Unmarshal(data, &varHealth)
+
+	if err != nil {
+		return err
+	}
+
+	*o = Health(varHealth)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "currentTime")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableHealth struct {

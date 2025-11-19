@@ -55,7 +55,10 @@ type User struct {
 	RoleIds []int32 `json:"roleIds,omitempty"`
 	// Indicates if two-factor authentication is enabled for the user.
 	TwoFactorEnabled *bool `json:"twoFactorEnabled,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _User User
 
 // NewUser instantiates a new User object
 // This constructor will assign default values to properties that have it defined,
@@ -714,7 +717,50 @@ func (o User) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.TwoFactorEnabled) {
 		toSerialize["twoFactorEnabled"] = o.TwoFactorEnabled
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *User) UnmarshalJSON(data []byte) (err error) {
+	varUser := _User{}
+
+	err = json.Unmarshal(data, &varUser)
+
+	if err != nil {
+		return err
+	}
+
+	*o = User(varUser)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "firstName")
+		delete(additionalProperties, "lastName")
+		delete(additionalProperties, "apiOnlyUser")
+		delete(additionalProperties, "description")
+		delete(additionalProperties, "isEnabled")
+		delete(additionalProperties, "isLdap")
+		delete(additionalProperties, "isLocked")
+		delete(additionalProperties, "loggedInUser")
+		delete(additionalProperties, "readOnly")
+		delete(additionalProperties, "supportUser")
+		delete(additionalProperties, "userId")
+		delete(additionalProperties, "userName")
+		delete(additionalProperties, "accessGroupIds")
+		delete(additionalProperties, "currentSsoProvider")
+		delete(additionalProperties, "customerTree")
+		delete(additionalProperties, "fullName")
+		delete(additionalProperties, "roleIds")
+		delete(additionalProperties, "twoFactorEnabled")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableUser struct {

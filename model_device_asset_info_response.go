@@ -20,10 +20,13 @@ var _ MappedNullable = &DeviceAssetInfoResponse{}
 // DeviceAssetInfoResponse Represents a device asset info response. It contains the asset information about the device in the form of following categories : 1. os 2. application 3. computersystem 4. networkadapter 5. device 6. processor  The above categories are classified as \"default\" categories and the fields under these categories are considered   as \"default\" fields.  The default fields are considered definitive and are expected to be present at all times. If a default field is missing,   it indicates that information about that specific field for the device is unavailable.  The \"_extra\" part of the response contains all available asset categories and fields.  The extra categories and fields provide supplementary information about the device asset. These details are optional and may or may not be available in the future. Additionally, certain fields from the \"_extra\" categories or fields might transition to become default categories or fields in the future. 
 type DeviceAssetInfoResponse struct {
 	// Asset Information about the device.
-	Data any `json:"data,omitempty"`
+	Data *map[string]map[string]map[string]interface{} `json:"data,omitempty"`
 	// Links to related endpoints.
 	Links *map[string]string `json:"_links,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _DeviceAssetInfoResponse DeviceAssetInfoResponse
 
 // NewDeviceAssetInfoResponse instantiates a new DeviceAssetInfoResponse object
 // This constructor will assign default values to properties that have it defined,
@@ -43,17 +46,17 @@ func NewDeviceAssetInfoResponseWithDefaults() *DeviceAssetInfoResponse {
 }
 
 // GetData returns the Data field value if set, zero value otherwise.
-func (o *DeviceAssetInfoResponse) GetData() any {
+func (o *DeviceAssetInfoResponse) GetData() map[string]map[string]map[string]interface{} {
 	if o == nil || IsNil(o.Data) {
-		var ret map[string]map[string]interface{}
+		var ret map[string]map[string]map[string]interface{}
 		return ret
 	}
-	return o.Data
+	return *o.Data
 }
 
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *DeviceAssetInfoResponse) GetDataOk() (any, bool) {
+func (o *DeviceAssetInfoResponse) GetDataOk() (*map[string]map[string]map[string]interface{}, bool) {
 	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
@@ -69,8 +72,8 @@ func (o *DeviceAssetInfoResponse) HasData() bool {
 	return false
 }
 
-// SetData gets a reference to the given interface{} and assigns it to the Data field.
-func (o *DeviceAssetInfoResponse) SetData(v any) {
+// SetData gets a reference to the given map[string]map[string]map[string]interface{} and assigns it to the Data field.
+func (o *DeviceAssetInfoResponse) SetData(v map[string]map[string]map[string]interface{}) {
 	o.Data = &v
 }
 
@@ -122,7 +125,34 @@ func (o DeviceAssetInfoResponse) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Links) {
 		toSerialize["_links"] = o.Links
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *DeviceAssetInfoResponse) UnmarshalJSON(data []byte) (err error) {
+	varDeviceAssetInfoResponse := _DeviceAssetInfoResponse{}
+
+	err = json.Unmarshal(data, &varDeviceAssetInfoResponse)
+
+	if err != nil {
+		return err
+	}
+
+	*o = DeviceAssetInfoResponse(varDeviceAssetInfoResponse)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "data")
+		delete(additionalProperties, "_links")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableDeviceAssetInfoResponse struct {

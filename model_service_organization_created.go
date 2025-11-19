@@ -21,7 +21,10 @@ var _ MappedNullable = &ServiceOrganizationCreated{}
 type ServiceOrganizationCreated struct {
 	// Id of the created service organization.
 	SoId *int32 `json:"soId,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _ServiceOrganizationCreated ServiceOrganizationCreated
 
 // NewServiceOrganizationCreated instantiates a new ServiceOrganizationCreated object
 // This constructor will assign default values to properties that have it defined,
@@ -85,7 +88,33 @@ func (o ServiceOrganizationCreated) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.SoId) {
 		toSerialize["soId"] = o.SoId
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *ServiceOrganizationCreated) UnmarshalJSON(data []byte) (err error) {
+	varServiceOrganizationCreated := _ServiceOrganizationCreated{}
+
+	err = json.Unmarshal(data, &varServiceOrganizationCreated)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ServiceOrganizationCreated(varServiceOrganizationCreated)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "soId")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableServiceOrganizationCreated struct {

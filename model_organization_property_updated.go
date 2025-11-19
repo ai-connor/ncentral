@@ -21,7 +21,10 @@ var _ MappedNullable = &OrganizationPropertyUpdated{}
 type OrganizationPropertyUpdated struct {
 	// The list of warnings.
 	Warnings []string `json:"_warnings,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _OrganizationPropertyUpdated OrganizationPropertyUpdated
 
 // NewOrganizationPropertyUpdated instantiates a new OrganizationPropertyUpdated object
 // This constructor will assign default values to properties that have it defined,
@@ -85,7 +88,33 @@ func (o OrganizationPropertyUpdated) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Warnings) {
 		toSerialize["_warnings"] = o.Warnings
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *OrganizationPropertyUpdated) UnmarshalJSON(data []byte) (err error) {
+	varOrganizationPropertyUpdated := _OrganizationPropertyUpdated{}
+
+	err = json.Unmarshal(data, &varOrganizationPropertyUpdated)
+
+	if err != nil {
+		return err
+	}
+
+	*o = OrganizationPropertyUpdated(varOrganizationPropertyUpdated)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "_warnings")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableOrganizationPropertyUpdated struct {

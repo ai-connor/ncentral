@@ -12,7 +12,6 @@ package ncentral
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -63,6 +62,7 @@ type ServiceOrganization struct {
 	PostalCode *string `json:"postalCode,omitempty"`
 	IsSystem *bool `json:"isSystem,omitempty"`
 	IsServiceOrg *bool `json:"isServiceOrg,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _ServiceOrganization ServiceOrganization
@@ -846,6 +846,11 @@ func (o ServiceOrganization) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.IsServiceOrg) {
 		toSerialize["isServiceOrg"] = o.IsServiceOrg
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -874,15 +879,41 @@ func (o *ServiceOrganization) UnmarshalJSON(data []byte) (err error) {
 
 	varServiceOrganization := _ServiceOrganization{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varServiceOrganization)
+	err = json.Unmarshal(data, &varServiceOrganization)
 
 	if err != nil {
 		return err
 	}
 
 	*o = ServiceOrganization(varServiceOrganization)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "soId")
+		delete(additionalProperties, "soName")
+		delete(additionalProperties, "orgUnitType")
+		delete(additionalProperties, "parentId")
+		delete(additionalProperties, "externalId")
+		delete(additionalProperties, "externalId2")
+		delete(additionalProperties, "contactFirstName")
+		delete(additionalProperties, "contactLastName")
+		delete(additionalProperties, "phone")
+		delete(additionalProperties, "contactTitle")
+		delete(additionalProperties, "contactEmail")
+		delete(additionalProperties, "contactPhone")
+		delete(additionalProperties, "contactPhoneExt")
+		delete(additionalProperties, "contactDepartment")
+		delete(additionalProperties, "street1")
+		delete(additionalProperties, "street2")
+		delete(additionalProperties, "city")
+		delete(additionalProperties, "stateProv")
+		delete(additionalProperties, "country")
+		delete(additionalProperties, "postalCode")
+		delete(additionalProperties, "isSystem")
+		delete(additionalProperties, "isServiceOrg")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

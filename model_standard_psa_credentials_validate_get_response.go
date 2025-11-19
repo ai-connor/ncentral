@@ -22,7 +22,10 @@ type StandardPsaCredentialsValidateGetResponse struct {
 	Data *Data `json:"data,omitempty"`
 	// Links to related endpoints.
 	Links *map[string]string `json:"_links,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _StandardPsaCredentialsValidateGetResponse StandardPsaCredentialsValidateGetResponse
 
 // NewStandardPsaCredentialsValidateGetResponse instantiates a new StandardPsaCredentialsValidateGetResponse object
 // This constructor will assign default values to properties that have it defined,
@@ -121,7 +124,34 @@ func (o StandardPsaCredentialsValidateGetResponse) ToMap() (map[string]interface
 	if !IsNil(o.Links) {
 		toSerialize["_links"] = o.Links
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *StandardPsaCredentialsValidateGetResponse) UnmarshalJSON(data []byte) (err error) {
+	varStandardPsaCredentialsValidateGetResponse := _StandardPsaCredentialsValidateGetResponse{}
+
+	err = json.Unmarshal(data, &varStandardPsaCredentialsValidateGetResponse)
+
+	if err != nil {
+		return err
+	}
+
+	*o = StandardPsaCredentialsValidateGetResponse(varStandardPsaCredentialsValidateGetResponse)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "data")
+		delete(additionalProperties, "_links")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableStandardPsaCredentialsValidateGetResponse struct {

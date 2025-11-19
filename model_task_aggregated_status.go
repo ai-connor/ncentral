@@ -23,7 +23,10 @@ type TaskAggregatedStatus struct {
 	TaskName *string `json:"taskName,omitempty"`
 	// Map of status counts where keys are status names and values are status counts.
 	StatusCounts *map[string]int32 `json:"statusCounts,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _TaskAggregatedStatus TaskAggregatedStatus
 
 // NewTaskAggregatedStatus instantiates a new TaskAggregatedStatus object
 // This constructor will assign default values to properties that have it defined,
@@ -122,7 +125,34 @@ func (o TaskAggregatedStatus) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.StatusCounts) {
 		toSerialize["statusCounts"] = o.StatusCounts
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *TaskAggregatedStatus) UnmarshalJSON(data []byte) (err error) {
+	varTaskAggregatedStatus := _TaskAggregatedStatus{}
+
+	err = json.Unmarshal(data, &varTaskAggregatedStatus)
+
+	if err != nil {
+		return err
+	}
+
+	*o = TaskAggregatedStatus(varTaskAggregatedStatus)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "taskName")
+		delete(additionalProperties, "statusCounts")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableTaskAggregatedStatus struct {

@@ -47,7 +47,10 @@ type TaskInfo struct {
 	IsEnabled *bool `json:"isEnabled,omitempty"`
 	// List of device IDs that this task is run on.
 	DeviceIds []string `json:"deviceIds,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _TaskInfo TaskInfo
 
 // NewTaskInfo instantiates a new TaskInfo object
 // This constructor will assign default values to properties that have it defined,
@@ -566,7 +569,46 @@ func (o TaskInfo) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.DeviceIds) {
 		toSerialize["deviceIds"] = o.DeviceIds
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *TaskInfo) UnmarshalJSON(data []byte) (err error) {
+	varTaskInfo := _TaskInfo{}
+
+	err = json.Unmarshal(data, &varTaskInfo)
+
+	if err != nil {
+		return err
+	}
+
+	*o = TaskInfo(varTaskInfo)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "taskId")
+		delete(additionalProperties, "parentId")
+		delete(additionalProperties, "name")
+		delete(additionalProperties, "taskName")
+		delete(additionalProperties, "itemId")
+		delete(additionalProperties, "type")
+		delete(additionalProperties, "orgUnitId")
+		delete(additionalProperties, "soId")
+		delete(additionalProperties, "customerId")
+		delete(additionalProperties, "siteId")
+		delete(additionalProperties, "applianceId")
+		delete(additionalProperties, "isReactive")
+		delete(additionalProperties, "isEnabled")
+		delete(additionalProperties, "deviceIds")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableTaskInfo struct {

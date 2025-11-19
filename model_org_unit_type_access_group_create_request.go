@@ -12,7 +12,6 @@ package ncentral
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -31,6 +30,7 @@ type OrgUnitTypeAccessGroupCreateRequest struct {
 	UserIds []string `json:"userIds,omitempty"`
 	// Flag indicating whether new org units should be automatically included. Default or invalid: false
 	AutoIncludeNewOrgUnits *string `json:"autoIncludeNewOrgUnits,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _OrgUnitTypeAccessGroupCreateRequest OrgUnitTypeAccessGroupCreateRequest
@@ -219,6 +219,11 @@ func (o OrgUnitTypeAccessGroupCreateRequest) ToMap() (map[string]interface{}, er
 	if !IsNil(o.AutoIncludeNewOrgUnits) {
 		toSerialize["autoIncludeNewOrgUnits"] = o.AutoIncludeNewOrgUnits
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -247,15 +252,24 @@ func (o *OrgUnitTypeAccessGroupCreateRequest) UnmarshalJSON(data []byte) (err er
 
 	varOrgUnitTypeAccessGroupCreateRequest := _OrgUnitTypeAccessGroupCreateRequest{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varOrgUnitTypeAccessGroupCreateRequest)
+	err = json.Unmarshal(data, &varOrgUnitTypeAccessGroupCreateRequest)
 
 	if err != nil {
 		return err
 	}
 
 	*o = OrgUnitTypeAccessGroupCreateRequest(varOrgUnitTypeAccessGroupCreateRequest)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "groupName")
+		delete(additionalProperties, "groupDescription")
+		delete(additionalProperties, "orgUnitIds")
+		delete(additionalProperties, "userIds")
+		delete(additionalProperties, "autoIncludeNewOrgUnits")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

@@ -12,7 +12,6 @@ package ncentral
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -29,6 +28,7 @@ type QueryResponse struct {
 	TotalPages *int32 `json:"totalPages,omitempty"`
 	Links Links `json:"_links"`
 	Warning *string `json:"_warning,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _QueryResponse QueryResponse
@@ -331,6 +331,11 @@ func (o QueryResponse) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Warning) {
 		toSerialize["_warning"] = o.Warning
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -358,15 +363,27 @@ func (o *QueryResponse) UnmarshalJSON(data []byte) (err error) {
 
 	varQueryResponse := _QueryResponse{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varQueryResponse)
+	err = json.Unmarshal(data, &varQueryResponse)
 
 	if err != nil {
 		return err
 	}
 
 	*o = QueryResponse(varQueryResponse)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "data")
+		delete(additionalProperties, "pageNumber")
+		delete(additionalProperties, "pageSize")
+		delete(additionalProperties, "itemCount")
+		delete(additionalProperties, "totalItems")
+		delete(additionalProperties, "totalPages")
+		delete(additionalProperties, "_links")
+		delete(additionalProperties, "_warning")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

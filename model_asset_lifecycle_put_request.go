@@ -12,7 +12,6 @@ package ncentral
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -32,6 +31,7 @@ type AssetLifecyclePutRequest struct {
 	// This field is Read Only
 	UpdateWarrantyError *string `json:"updateWarrantyError,omitempty"`
 	AllNull *bool `json:"allNull,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _AssetLifecyclePutRequest AssetLifecyclePutRequest
@@ -341,6 +341,11 @@ func (o AssetLifecyclePutRequest) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.AllNull) {
 		toSerialize["allNull"] = o.AllNull
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -375,15 +380,29 @@ func (o *AssetLifecyclePutRequest) UnmarshalJSON(data []byte) (err error) {
 
 	varAssetLifecyclePutRequest := _AssetLifecyclePutRequest{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varAssetLifecyclePutRequest)
+	err = json.Unmarshal(data, &varAssetLifecyclePutRequest)
 
 	if err != nil {
 		return err
 	}
 
 	*o = AssetLifecyclePutRequest(varAssetLifecyclePutRequest)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "warrantyExpiryDate")
+		delete(additionalProperties, "leaseExpiryDate")
+		delete(additionalProperties, "expectedReplacementDate")
+		delete(additionalProperties, "purchaseDate")
+		delete(additionalProperties, "cost")
+		delete(additionalProperties, "location")
+		delete(additionalProperties, "assetTag")
+		delete(additionalProperties, "description")
+		delete(additionalProperties, "updateWarrantyError")
+		delete(additionalProperties, "allNull")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

@@ -12,7 +12,6 @@ package ncentral
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -27,6 +26,7 @@ type ScheduledTaskCredential struct {
 	Username *string `json:"username,omitempty"`
 	// The password (used with 'CustomCredentials' type).
 	Password *string `json:"password,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _ScheduledTaskCredential ScheduledTaskCredential
@@ -154,6 +154,11 @@ func (o ScheduledTaskCredential) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Password) {
 		toSerialize["password"] = o.Password
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -181,15 +186,22 @@ func (o *ScheduledTaskCredential) UnmarshalJSON(data []byte) (err error) {
 
 	varScheduledTaskCredential := _ScheduledTaskCredential{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varScheduledTaskCredential)
+	err = json.Unmarshal(data, &varScheduledTaskCredential)
 
 	if err != nil {
 		return err
 	}
 
 	*o = ScheduledTaskCredential(varScheduledTaskCredential)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "type")
+		delete(additionalProperties, "username")
+		delete(additionalProperties, "password")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

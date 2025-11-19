@@ -21,7 +21,10 @@ var _ MappedNullable = &MaintenanceWindowsRequest{}
 type MaintenanceWindowsRequest struct {
 	DeviceIDs []int32 `json:"deviceIDs,omitempty"`
 	MaintenanceWindows []MaintenanceWindowRequest `json:"maintenanceWindows,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _MaintenanceWindowsRequest MaintenanceWindowsRequest
 
 // NewMaintenanceWindowsRequest instantiates a new MaintenanceWindowsRequest object
 // This constructor will assign default values to properties that have it defined,
@@ -120,7 +123,34 @@ func (o MaintenanceWindowsRequest) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.MaintenanceWindows) {
 		toSerialize["maintenanceWindows"] = o.MaintenanceWindows
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *MaintenanceWindowsRequest) UnmarshalJSON(data []byte) (err error) {
+	varMaintenanceWindowsRequest := _MaintenanceWindowsRequest{}
+
+	err = json.Unmarshal(data, &varMaintenanceWindowsRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = MaintenanceWindowsRequest(varMaintenanceWindowsRequest)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "deviceIDs")
+		delete(additionalProperties, "maintenanceWindows")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableMaintenanceWindowsRequest struct {

@@ -29,7 +29,10 @@ type CustomPsaTicketInfo struct {
 	TicketStatus *string `json:"ticketStatus,omitempty"`
 	// The creation date of the Custom PSA ticket.
 	CreationDate *string `json:"creationDate,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _CustomPsaTicketInfo CustomPsaTicketInfo
 
 // NewCustomPsaTicketInfo instantiates a new CustomPsaTicketInfo object
 // This constructor will assign default values to properties that have it defined,
@@ -233,7 +236,37 @@ func (o CustomPsaTicketInfo) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.CreationDate) {
 		toSerialize["creationDate"] = o.CreationDate
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *CustomPsaTicketInfo) UnmarshalJSON(data []byte) (err error) {
+	varCustomPsaTicketInfo := _CustomPsaTicketInfo{}
+
+	err = json.Unmarshal(data, &varCustomPsaTicketInfo)
+
+	if err != nil {
+		return err
+	}
+
+	*o = CustomPsaTicketInfo(varCustomPsaTicketInfo)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "ticketId")
+		delete(additionalProperties, "ticketTitle")
+		delete(additionalProperties, "ticketDetails")
+		delete(additionalProperties, "ticketStatus")
+		delete(additionalProperties, "creationDate")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableCustomPsaTicketInfo struct {

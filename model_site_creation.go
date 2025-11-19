@@ -12,7 +12,6 @@ package ncentral
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -55,6 +54,7 @@ type SiteCreation struct {
 	SiteName string `json:"siteName"`
 	// License type of the site.
 	LicenseType *string `json:"licenseType,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _SiteCreation SiteCreation
@@ -658,6 +658,11 @@ func (o SiteCreation) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.LicenseType) {
 		toSerialize["licenseType"] = o.LicenseType
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -687,15 +692,36 @@ func (o *SiteCreation) UnmarshalJSON(data []byte) (err error) {
 
 	varSiteCreation := _SiteCreation{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varSiteCreation)
+	err = json.Unmarshal(data, &varSiteCreation)
 
 	if err != nil {
 		return err
 	}
 
 	*o = SiteCreation(varSiteCreation)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "contactFirstName")
+		delete(additionalProperties, "contactLastName")
+		delete(additionalProperties, "externalId")
+		delete(additionalProperties, "phone")
+		delete(additionalProperties, "contactTitle")
+		delete(additionalProperties, "contactEmail")
+		delete(additionalProperties, "contactPhone")
+		delete(additionalProperties, "contactPhoneExt")
+		delete(additionalProperties, "contactDepartment")
+		delete(additionalProperties, "street1")
+		delete(additionalProperties, "street2")
+		delete(additionalProperties, "city")
+		delete(additionalProperties, "stateProv")
+		delete(additionalProperties, "country")
+		delete(additionalProperties, "postalCode")
+		delete(additionalProperties, "siteName")
+		delete(additionalProperties, "licenseType")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

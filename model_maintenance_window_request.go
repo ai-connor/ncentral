@@ -12,7 +12,6 @@ package ncentral
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -51,6 +50,7 @@ type MaintenanceWindowRequest struct {
 	MessageSender *string `json:"messageSender,omitempty"`
 	// Preserve State of Device During Reboot (/g flag) (Reboot Window)
 	PreserveStateEnabled *bool `json:"preserveStateEnabled,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _MaintenanceWindowRequest MaintenanceWindowRequest
@@ -553,6 +553,11 @@ func (o MaintenanceWindowRequest) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.PreserveStateEnabled) {
 		toSerialize["preserveStateEnabled"] = o.PreserveStateEnabled
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -585,15 +590,34 @@ func (o *MaintenanceWindowRequest) UnmarshalJSON(data []byte) (err error) {
 
 	varMaintenanceWindowRequest := _MaintenanceWindowRequest{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varMaintenanceWindowRequest)
+	err = json.Unmarshal(data, &varMaintenanceWindowRequest)
 
 	if err != nil {
 		return err
 	}
 
 	*o = MaintenanceWindowRequest(varMaintenanceWindowRequest)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "applicableAction")
+		delete(additionalProperties, "cron")
+		delete(additionalProperties, "duration")
+		delete(additionalProperties, "enabled")
+		delete(additionalProperties, "name")
+		delete(additionalProperties, "type")
+		delete(additionalProperties, "downtimeOnAction")
+		delete(additionalProperties, "maxDowntime")
+		delete(additionalProperties, "rebootMethod")
+		delete(additionalProperties, "rebootDelay")
+		delete(additionalProperties, "userMessageEnabled")
+		delete(additionalProperties, "userMessage")
+		delete(additionalProperties, "messageSenderEnabled")
+		delete(additionalProperties, "messageSender")
+		delete(additionalProperties, "preserveStateEnabled")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

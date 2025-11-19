@@ -21,7 +21,10 @@ var _ MappedNullable = &VersionInfoAuthenticatedRequest{}
 type VersionInfoAuthenticatedRequest struct {
 	Username *string `json:"username,omitempty"`
 	Password *string `json:"password,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _VersionInfoAuthenticatedRequest VersionInfoAuthenticatedRequest
 
 // NewVersionInfoAuthenticatedRequest instantiates a new VersionInfoAuthenticatedRequest object
 // This constructor will assign default values to properties that have it defined,
@@ -120,7 +123,34 @@ func (o VersionInfoAuthenticatedRequest) ToMap() (map[string]interface{}, error)
 	if !IsNil(o.Password) {
 		toSerialize["password"] = o.Password
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *VersionInfoAuthenticatedRequest) UnmarshalJSON(data []byte) (err error) {
+	varVersionInfoAuthenticatedRequest := _VersionInfoAuthenticatedRequest{}
+
+	err = json.Unmarshal(data, &varVersionInfoAuthenticatedRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = VersionInfoAuthenticatedRequest(varVersionInfoAuthenticatedRequest)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "username")
+		delete(additionalProperties, "password")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableVersionInfoAuthenticatedRequest struct {

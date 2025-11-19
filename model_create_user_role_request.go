@@ -12,7 +12,6 @@ package ncentral
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -29,6 +28,7 @@ type CreateUserRoleRequest struct {
 	PermissionIds []string `json:"permissionIds"`
 	// The list of user IDs
 	UserIds []string `json:"userIds,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _CreateUserRoleRequest CreateUserRoleRequest
@@ -173,6 +173,11 @@ func (o CreateUserRoleRequest) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.UserIds) {
 		toSerialize["userIds"] = o.UserIds
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -202,15 +207,23 @@ func (o *CreateUserRoleRequest) UnmarshalJSON(data []byte) (err error) {
 
 	varCreateUserRoleRequest := _CreateUserRoleRequest{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varCreateUserRoleRequest)
+	err = json.Unmarshal(data, &varCreateUserRoleRequest)
 
 	if err != nil {
 		return err
 	}
 
 	*o = CreateUserRoleRequest(varCreateUserRoleRequest)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "roleName")
+		delete(additionalProperties, "description")
+		delete(additionalProperties, "permissionIds")
+		delete(additionalProperties, "userIds")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

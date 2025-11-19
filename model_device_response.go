@@ -22,7 +22,10 @@ type DeviceResponse struct {
 	Data *Device `json:"data,omitempty"`
 	// Links to related endpoints.
 	Links *map[string]string `json:"_links,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _DeviceResponse DeviceResponse
 
 // NewDeviceResponse instantiates a new DeviceResponse object
 // This constructor will assign default values to properties that have it defined,
@@ -121,7 +124,34 @@ func (o DeviceResponse) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Links) {
 		toSerialize["_links"] = o.Links
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *DeviceResponse) UnmarshalJSON(data []byte) (err error) {
+	varDeviceResponse := _DeviceResponse{}
+
+	err = json.Unmarshal(data, &varDeviceResponse)
+
+	if err != nil {
+		return err
+	}
+
+	*o = DeviceResponse(varDeviceResponse)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "data")
+		delete(additionalProperties, "_links")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableDeviceResponse struct {

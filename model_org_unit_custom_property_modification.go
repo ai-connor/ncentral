@@ -29,7 +29,10 @@ type OrgUnitCustomPropertyModification struct {
 	Value *string `json:"value,omitempty"`
 	// The possible value of the property.
 	EnumeratedValueList []string `json:"enumeratedValueList,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _OrgUnitCustomPropertyModification OrgUnitCustomPropertyModification
 
 // NewOrgUnitCustomPropertyModification instantiates a new OrgUnitCustomPropertyModification object
 // This constructor will assign default values to properties that have it defined,
@@ -233,7 +236,37 @@ func (o OrgUnitCustomPropertyModification) ToMap() (map[string]interface{}, erro
 	if !IsNil(o.EnumeratedValueList) {
 		toSerialize["enumeratedValueList"] = o.EnumeratedValueList
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *OrgUnitCustomPropertyModification) UnmarshalJSON(data []byte) (err error) {
+	varOrgUnitCustomPropertyModification := _OrgUnitCustomPropertyModification{}
+
+	err = json.Unmarshal(data, &varOrgUnitCustomPropertyModification)
+
+	if err != nil {
+		return err
+	}
+
+	*o = OrgUnitCustomPropertyModification(varOrgUnitCustomPropertyModification)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "propertyId")
+		delete(additionalProperties, "propertyName")
+		delete(additionalProperties, "propertyType")
+		delete(additionalProperties, "value")
+		delete(additionalProperties, "enumeratedValueList")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableOrgUnitCustomPropertyModification struct {

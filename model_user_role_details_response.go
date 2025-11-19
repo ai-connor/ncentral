@@ -22,7 +22,10 @@ type UserRoleDetailsResponse struct {
 	Data *UserRoleDetails `json:"data,omitempty"`
 	// Links to related endpoints.
 	Links *map[string]string `json:"_links,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _UserRoleDetailsResponse UserRoleDetailsResponse
 
 // NewUserRoleDetailsResponse instantiates a new UserRoleDetailsResponse object
 // This constructor will assign default values to properties that have it defined,
@@ -121,7 +124,34 @@ func (o UserRoleDetailsResponse) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Links) {
 		toSerialize["_links"] = o.Links
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *UserRoleDetailsResponse) UnmarshalJSON(data []byte) (err error) {
+	varUserRoleDetailsResponse := _UserRoleDetailsResponse{}
+
+	err = json.Unmarshal(data, &varUserRoleDetailsResponse)
+
+	if err != nil {
+		return err
+	}
+
+	*o = UserRoleDetailsResponse(varUserRoleDetailsResponse)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "data")
+		delete(additionalProperties, "_links")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableUserRoleDetailsResponse struct {

@@ -20,7 +20,10 @@ var _ MappedNullable = &AuthValidateResponse{}
 // AuthValidateResponse Response for validating the authentication access token.
 type AuthValidateResponse struct {
 	Message *string `json:"message,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _AuthValidateResponse AuthValidateResponse
 
 // NewAuthValidateResponse instantiates a new AuthValidateResponse object
 // This constructor will assign default values to properties that have it defined,
@@ -84,7 +87,33 @@ func (o AuthValidateResponse) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Message) {
 		toSerialize["message"] = o.Message
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *AuthValidateResponse) UnmarshalJSON(data []byte) (err error) {
+	varAuthValidateResponse := _AuthValidateResponse{}
+
+	err = json.Unmarshal(data, &varAuthValidateResponse)
+
+	if err != nil {
+		return err
+	}
+
+	*o = AuthValidateResponse(varAuthValidateResponse)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "message")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableAuthValidateResponse struct {

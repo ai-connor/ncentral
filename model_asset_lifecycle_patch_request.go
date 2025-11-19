@@ -28,7 +28,10 @@ type AssetLifecyclePatchRequest struct {
 	AssetTag *string `json:"assetTag,omitempty"`
 	Description *string `json:"description,omitempty"`
 	UpdateWarrantyError *string `json:"updateWarrantyError,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _AssetLifecyclePatchRequest AssetLifecyclePatchRequest
 
 // NewAssetLifecyclePatchRequest instantiates a new AssetLifecyclePatchRequest object
 // This constructor will assign default values to properties that have it defined,
@@ -372,7 +375,41 @@ func (o AssetLifecyclePatchRequest) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.UpdateWarrantyError) {
 		toSerialize["updateWarrantyError"] = o.UpdateWarrantyError
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *AssetLifecyclePatchRequest) UnmarshalJSON(data []byte) (err error) {
+	varAssetLifecyclePatchRequest := _AssetLifecyclePatchRequest{}
+
+	err = json.Unmarshal(data, &varAssetLifecyclePatchRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = AssetLifecyclePatchRequest(varAssetLifecyclePatchRequest)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "warrantyExpiryDate")
+		delete(additionalProperties, "leaseExpiryDate")
+		delete(additionalProperties, "expectedReplacementDate")
+		delete(additionalProperties, "purchaseDate")
+		delete(additionalProperties, "cost")
+		delete(additionalProperties, "location")
+		delete(additionalProperties, "assetTag")
+		delete(additionalProperties, "description")
+		delete(additionalProperties, "updateWarrantyError")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableAssetLifecyclePatchRequest struct {

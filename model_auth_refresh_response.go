@@ -22,7 +22,10 @@ type AuthRefreshResponse struct {
 	Tokens *AuthTokens `json:"tokens,omitempty"`
 	Refresh *string `json:"refresh,omitempty"`
 	Validate *string `json:"validate,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _AuthRefreshResponse AuthRefreshResponse
 
 // NewAuthRefreshResponse instantiates a new AuthRefreshResponse object
 // This constructor will assign default values to properties that have it defined,
@@ -156,7 +159,35 @@ func (o AuthRefreshResponse) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Validate) {
 		toSerialize["validate"] = o.Validate
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *AuthRefreshResponse) UnmarshalJSON(data []byte) (err error) {
+	varAuthRefreshResponse := _AuthRefreshResponse{}
+
+	err = json.Unmarshal(data, &varAuthRefreshResponse)
+
+	if err != nil {
+		return err
+	}
+
+	*o = AuthRefreshResponse(varAuthRefreshResponse)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "tokens")
+		delete(additionalProperties, "refresh")
+		delete(additionalProperties, "validate")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableAuthRefreshResponse struct {

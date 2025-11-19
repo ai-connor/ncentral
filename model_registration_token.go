@@ -23,7 +23,10 @@ type RegistrationToken struct {
 	RegistrationToken *string `json:"registrationToken,omitempty"`
 	// The registration-token expiry date.
 	RegistrationTokenExpiryDate *string `json:"registrationTokenExpiryDate,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _RegistrationToken RegistrationToken
 
 // NewRegistrationToken instantiates a new RegistrationToken object
 // This constructor will assign default values to properties that have it defined,
@@ -122,7 +125,34 @@ func (o RegistrationToken) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.RegistrationTokenExpiryDate) {
 		toSerialize["registrationTokenExpiryDate"] = o.RegistrationTokenExpiryDate
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *RegistrationToken) UnmarshalJSON(data []byte) (err error) {
+	varRegistrationToken := _RegistrationToken{}
+
+	err = json.Unmarshal(data, &varRegistrationToken)
+
+	if err != nil {
+		return err
+	}
+
+	*o = RegistrationToken(varRegistrationToken)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "registrationToken")
+		delete(additionalProperties, "registrationTokenExpiryDate")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableRegistrationToken struct {

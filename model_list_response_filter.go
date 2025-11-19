@@ -21,7 +21,10 @@ var _ MappedNullable = &ListResponseFilter{}
 type ListResponseFilter struct {
 	Data []Filter `json:"data,omitempty"`
 	TotalItems *int32 `json:"totalItems,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _ListResponseFilter ListResponseFilter
 
 // NewListResponseFilter instantiates a new ListResponseFilter object
 // This constructor will assign default values to properties that have it defined,
@@ -120,7 +123,34 @@ func (o ListResponseFilter) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.TotalItems) {
 		toSerialize["totalItems"] = o.TotalItems
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *ListResponseFilter) UnmarshalJSON(data []byte) (err error) {
+	varListResponseFilter := _ListResponseFilter{}
+
+	err = json.Unmarshal(data, &varListResponseFilter)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ListResponseFilter(varListResponseFilter)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "data")
+		delete(additionalProperties, "totalItems")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableListResponseFilter struct {

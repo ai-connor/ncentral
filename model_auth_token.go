@@ -12,7 +12,6 @@ package ncentral
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -27,6 +26,7 @@ type AuthToken struct {
 	Type string `json:"type"`
 	// The expiry in seconds.
 	ExpirySeconds *int64 `json:"expirySeconds,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _AuthToken AuthToken
@@ -145,6 +145,11 @@ func (o AuthToken) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.ExpirySeconds) {
 		toSerialize["expirySeconds"] = o.ExpirySeconds
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -173,15 +178,22 @@ func (o *AuthToken) UnmarshalJSON(data []byte) (err error) {
 
 	varAuthToken := _AuthToken{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varAuthToken)
+	err = json.Unmarshal(data, &varAuthToken)
 
 	if err != nil {
 		return err
 	}
 
 	*o = AuthToken(varAuthToken)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "token")
+		delete(additionalProperties, "type")
+		delete(additionalProperties, "expirySeconds")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

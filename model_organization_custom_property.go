@@ -29,7 +29,10 @@ type OrganizationCustomProperty struct {
 	Value *string `json:"value,omitempty"`
 	// The possible values of the property.
 	EnumeratedValueList []string `json:"enumeratedValueList,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _OrganizationCustomProperty OrganizationCustomProperty
 
 // NewOrganizationCustomProperty instantiates a new OrganizationCustomProperty object
 // This constructor will assign default values to properties that have it defined,
@@ -233,7 +236,37 @@ func (o OrganizationCustomProperty) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.EnumeratedValueList) {
 		toSerialize["enumeratedValueList"] = o.EnumeratedValueList
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *OrganizationCustomProperty) UnmarshalJSON(data []byte) (err error) {
+	varOrganizationCustomProperty := _OrganizationCustomProperty{}
+
+	err = json.Unmarshal(data, &varOrganizationCustomProperty)
+
+	if err != nil {
+		return err
+	}
+
+	*o = OrganizationCustomProperty(varOrganizationCustomProperty)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "propertyId")
+		delete(additionalProperties, "propertyName")
+		delete(additionalProperties, "propertyType")
+		delete(additionalProperties, "value")
+		delete(additionalProperties, "enumeratedValueList")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableOrganizationCustomProperty struct {

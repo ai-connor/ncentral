@@ -26,7 +26,10 @@ type ApplianceTaskStatusDetail struct {
 	State *string `json:"state,omitempty"`
 	MonitoringType *string `json:"monitoringType,omitempty"`
 	Thresholds []ApplianceTaskThresholdBasic `json:"thresholds,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _ApplianceTaskStatusDetail ApplianceTaskStatusDetail
 
 // NewApplianceTaskStatusDetail instantiates a new ApplianceTaskStatusDetail object
 // This constructor will assign default values to properties that have it defined,
@@ -300,7 +303,39 @@ func (o ApplianceTaskStatusDetail) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Thresholds) {
 		toSerialize["thresholds"] = o.Thresholds
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *ApplianceTaskStatusDetail) UnmarshalJSON(data []byte) (err error) {
+	varApplianceTaskStatusDetail := _ApplianceTaskStatusDetail{}
+
+	err = json.Unmarshal(data, &varApplianceTaskStatusDetail)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ApplianceTaskStatusDetail(varApplianceTaskStatusDetail)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "scanDetailId")
+		delete(additionalProperties, "detailName")
+		delete(additionalProperties, "description")
+		delete(additionalProperties, "detailValue")
+		delete(additionalProperties, "state")
+		delete(additionalProperties, "monitoringType")
+		delete(additionalProperties, "thresholds")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableApplianceTaskStatusDetail struct {

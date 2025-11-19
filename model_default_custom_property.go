@@ -37,7 +37,10 @@ type DefaultCustomProperty struct {
 	SelectedOrgUnitIds []int32 `json:"selectedOrgUnitIds,omitempty"`
 	// The list of allowed values for the property, if the property type is ENUMERATED.
 	EnumeratedValueList []string `json:"enumeratedValueList,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _DefaultCustomProperty DefaultCustomProperty
 
 // NewDefaultCustomProperty instantiates a new DefaultCustomProperty object
 // This constructor will assign default values to properties that have it defined,
@@ -381,7 +384,41 @@ func (o DefaultCustomProperty) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.EnumeratedValueList) {
 		toSerialize["enumeratedValueList"] = o.EnumeratedValueList
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *DefaultCustomProperty) UnmarshalJSON(data []byte) (err error) {
+	varDefaultCustomProperty := _DefaultCustomProperty{}
+
+	err = json.Unmarshal(data, &varDefaultCustomProperty)
+
+	if err != nil {
+		return err
+	}
+
+	*o = DefaultCustomProperty(varDefaultCustomProperty)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "propertyId")
+		delete(additionalProperties, "propertyName")
+		delete(additionalProperties, "orgUnitId")
+		delete(additionalProperties, "level")
+		delete(additionalProperties, "propertyType")
+		delete(additionalProperties, "propagationType")
+		delete(additionalProperties, "defaultValue")
+		delete(additionalProperties, "selectedOrgUnitIds")
+		delete(additionalProperties, "enumeratedValueList")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableDefaultCustomProperty struct {

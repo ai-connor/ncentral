@@ -44,7 +44,10 @@ type Device struct {
 	SiteName *string `json:"siteName,omitempty"`
 	// Last check-in time of the agent. This field is optional and will only be included if the value is non-null.
 	LastApplianceCheckinTime *string `json:"lastApplianceCheckinTime,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _Device Device
 
 // NewDevice instantiates a new Device object
 // This constructor will assign default values to properties that have it defined,
@@ -913,7 +916,56 @@ func (o Device) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.LastApplianceCheckinTime) {
 		toSerialize["lastApplianceCheckinTime"] = o.LastApplianceCheckinTime
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *Device) UnmarshalJSON(data []byte) (err error) {
+	varDevice := _Device{}
+
+	err = json.Unmarshal(data, &varDevice)
+
+	if err != nil {
+		return err
+	}
+
+	*o = Device(varDevice)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "deviceId")
+		delete(additionalProperties, "uri")
+		delete(additionalProperties, "remoteControlUri")
+		delete(additionalProperties, "sourceUri")
+		delete(additionalProperties, "longName")
+		delete(additionalProperties, "deviceClass")
+		delete(additionalProperties, "description")
+		delete(additionalProperties, "isProbe")
+		delete(additionalProperties, "osId")
+		delete(additionalProperties, "supportedOs")
+		delete(additionalProperties, "discoveredName")
+		delete(additionalProperties, "deviceClassLabel")
+		delete(additionalProperties, "supportedOsLabel")
+		delete(additionalProperties, "lastLoggedInUser")
+		delete(additionalProperties, "stillLoggedIn")
+		delete(additionalProperties, "licenseMode")
+		delete(additionalProperties, "orgUnitId")
+		delete(additionalProperties, "soId")
+		delete(additionalProperties, "soName")
+		delete(additionalProperties, "customerId")
+		delete(additionalProperties, "customerName")
+		delete(additionalProperties, "siteId")
+		delete(additionalProperties, "siteName")
+		delete(additionalProperties, "lastApplianceCheckinTime")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableDevice struct {

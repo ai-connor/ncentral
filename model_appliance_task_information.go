@@ -23,7 +23,10 @@ type ApplianceTaskInformation struct {
 	State *string `json:"state,omitempty"`
 	ErrorMessage *string `json:"errorMessage,omitempty"`
 	ServiceDetails []ApplianceTaskStatusDetail `json:"serviceDetails,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _ApplianceTaskInformation ApplianceTaskInformation
 
 // NewApplianceTaskInformation instantiates a new ApplianceTaskInformation object
 // This constructor will assign default values to properties that have it defined,
@@ -192,7 +195,36 @@ func (o ApplianceTaskInformation) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.ServiceDetails) {
 		toSerialize["serviceDetails"] = o.ServiceDetails
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *ApplianceTaskInformation) UnmarshalJSON(data []byte) (err error) {
+	varApplianceTaskInformation := _ApplianceTaskInformation{}
+
+	err = json.Unmarshal(data, &varApplianceTaskInformation)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ApplianceTaskInformation(varApplianceTaskInformation)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "scanTime")
+		delete(additionalProperties, "state")
+		delete(additionalProperties, "errorMessage")
+		delete(additionalProperties, "serviceDetails")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableApplianceTaskInformation struct {
