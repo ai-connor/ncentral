@@ -7,3 +7,6 @@ openapi-generator-cli generate \
     --skip-validate-spec \
     --git-user-id ai-connor \
     --git-repo-id ncentral
+
+cd ../..
+go fmt

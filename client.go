@@ -1,7 +1,7 @@
 /*
 N-central API-Service
 
-<h3>API Access</h3> <p>In order to use the API-Service endpoints, ensure the following prerequisites are met:</p> <ol>     <li>User is created in N-central with appropriate permissions and configuration         (roles, access groups, MFA disabled, 2FA disabled).</li>     <li>API access is set up in N-central by having a JWT         (Json Web Token, referred to as \"N-central User-API Token\") generated,         acting as the permanent secret solely used for fetching access and refresh tokens.</li> </ol> <p>To access the API-Service endpoints, the JWT must first be exchanged with access and refresh tokens:</p> <ul>     <li>         <p><b>Using Swagger UI:</b></p>         <ol>             <li>Click on the <b>\"Authorize\"</b> button and enter the JWT into the value field                 under <b>\"N-central User-API Token (JWT)\"</b>, then navigate to                 the <code>/api/auth/authenticate</code> endpoint, click <b>\"Try it out\"</b>                 and then <b>\"Execute\"</b>.                 <br/>The new “Access Token” and “Refresh Token” fields will be available in the “Server Response”                 section below. Note that the expiry is 3600s ( 1h ). Copy the value of the access token.</li>             <li>Click on the <b>lock icon</b> to the right of any endpoint                 (or the <b>\"Authorize\"</b> button at the top), enter the access token in the                 <b>\"API-Access Token\"</b> field and click <b>\"Authorize\"</b>.</li>             <li>To call an API-Service endpoint, navigate to it, click <b>\"Try it out\"</b> button and             then <b>\"Execute\"</b>. If the steps above were successful, the access token is included in requests             automatically.</li>         </ol>     </li>     <li>         <p><b>Using a different HTTP client:</b></p>         <ol>             <li>Call the <code>/api/auth/authenticate</code> endpoint.                 The JWT token must be specified under the <code>Authorization</code> header,                 in the form <code>Bearer &lt;YOUR_JWT&gt;\"</code>.                 <br/>The access and refresh tokens are present in the response.</li>             <li>When calling API-Service endpoints, make sure to specify the <b>access token</b> in             the <code>Authorization</code> header as <code>Bearer &lt;ACCESS_TOKEN&gt;</code>.</li>         </ol>     </li> </ul> <h3>API Pagination & Sorting</h3> <p>Certain API-Service query endpoints support pagination and sorting through the use of query parameters.</p> <p><b>Pagination query parameters:</b></p> <ul>     <li>pageSize: number between 1 and 1000 specifying how many items to return for each page (if available).         If unspecified, the default is 50.</li>     <li>pageNumber: number specifying what page of data to retrieve, starting from 1 as the first page.         If unspecified, the default is 1.</li> </ul> <p>A paginated response contains several related fields, such as pageSize, pageNumber, itemCount, totalItems,     totalPages, _links (first, last, previous and next pages) and _warning (containing any warning messages,     if present).</p> <p><b>Sorting query parameters:</b></p> <ul>     <li>sortBy: the name of the field to sort the results by. If unspecified, no sorting is applied.</li>     <li>sortOrder: the case insensitive sorting direction supporting ASC/ASCENDING/NATURAL and         DESC/DESCENDING/REVERSE. If unspecified, the default is ASC.</li> </ul> <h3>API Rate Limiting</h3> <p>The API-Service endpoints are rate limited to ensure the stability, availability and performance of     the overall system.</p> <p>Upon reaching such a rate limit, the endpoints return HTTP Status 429 - Too Many Requests.</p> <p>The system will accept further requests once existing in-flight requests are completed.</p> 
+<h3>API Access</h3> <p>In order to use the API-Service endpoints, ensure the following prerequisites are met:</p> <ol>     <li>User is created in N-central with appropriate permissions and configuration         (roles, access groups, MFA disabled, 2FA disabled).</li>     <li>API access is set up in N-central by having a JWT         (Json Web Token, referred to as \"N-central User-API Token\") generated,         acting as the permanent secret solely used for fetching access and refresh tokens.</li> </ol> <p>To access the API-Service endpoints, the JWT must first be exchanged with access and refresh tokens:</p> <ul>     <li>         <p><b>Using Swagger UI:</b></p>         <ol>             <li>Click on the <b>\"Authorize\"</b> button and enter the JWT into the value field                 under <b>\"N-central User-API Token (JWT)\"</b>, then navigate to                 the <code>/api/auth/authenticate</code> endpoint, click <b>\"Try it out\"</b>                 and then <b>\"Execute\"</b>.                 <br/>The new “Access Token” and “Refresh Token” fields will be available in the “Server Response”                 section below. Note that the expiry is 3600s ( 1h ). Copy the value of the access token.</li>             <li>Click on the <b>lock icon</b> to the right of any endpoint                 (or the <b>\"Authorize\"</b> button at the top), enter the access token in the                 <b>\"API-Access Token\"</b> field and click <b>\"Authorize\"</b>.</li>             <li>To call an API-Service endpoint, navigate to it, click <b>\"Try it out\"</b> button and             then <b>\"Execute\"</b>. If the steps above were successful, the access token is included in requests             automatically.</li>         </ol>     </li>     <li>         <p><b>Using a different HTTP client:</b></p>         <ol>             <li>Call the <code>/api/auth/authenticate</code> endpoint.                 The JWT token must be specified under the <code>Authorization</code> header,                 in the form <code>Bearer &lt;YOUR_JWT&gt;\"</code>.                 <br/>The access and refresh tokens are present in the response.</li>             <li>When calling API-Service endpoints, make sure to specify the <b>access token</b> in             the <code>Authorization</code> header as <code>Bearer &lt;ACCESS_TOKEN&gt;</code>.</li>         </ol>     </li> </ul> <h3>API Pagination & Sorting</h3> <p>Certain API-Service query endpoints support pagination and sorting through the use of query parameters.</p> <p><b>Pagination query parameters:</b></p> <ul>     <li>pageSize: number between 1 and 1000 specifying how many items to return for each page (if available).         If unspecified, the default is 50.</li>     <li>pageNumber: number specifying what page of data to retrieve, starting from 1 as the first page.         If unspecified, the default is 1.</li> </ul> <p>A paginated response contains several related fields, such as pageSize, pageNumber, itemCount, totalItems,     totalPages, _links (first, last, previous and next pages) and _warning (containing any warning messages,     if present).</p> <p><b>Sorting query parameters:</b></p> <ul>     <li>sortBy: the name of the field to sort the results by. If unspecified, no sorting is applied.</li>     <li>sortOrder: the case insensitive sorting direction supporting ASC/ASCENDING/NATURAL and         DESC/DESCENDING/REVERSE. If unspecified, the default is ASC.</li> </ul> <h3>API Rate Limiting</h3> <p>The API-Service endpoints are rate limited to ensure the stability, availability and performance of     the overall system.</p> <p>Upon reaching such a rate limit, the endpoints return HTTP Status 429 - Too Many Requests.</p> <p>The system will accept further requests once existing in-flight requests are completed.</p>
 
 API version: 1.0
 */
@@ -31,14 +31,13 @@ import (
 	"strings"
 	"time"
 	"unicode/utf8"
-
 )
 
 var (
 	JsonCheck       = regexp.MustCompile(`(?i:(?:application|text)/(?:[^;]+\+)?json)`)
 	XmlCheck        = regexp.MustCompile(`(?i:(?:application|text)/(?:[^;]+\+)?xml)`)
 	queryParamSplit = regexp.MustCompile(`(^|&)([^&]+)`)
-	queryDescape    = strings.NewReplacer( "%5B", "[", "%5D", "]" )
+	queryDescape    = strings.NewReplacer("%5B", "[", "%5D", "]")
 )
 
 // APIClient manages communication with the N-central API-Service API v1.0
@@ -170,7 +169,7 @@ func typeCheckParameter(obj interface{}, expected string, name string) error {
 	return nil
 }
 
-func parameterValueToString( obj interface{}, key string ) string {
+func parameterValueToString(obj interface{}, key string) string {
 	if reflect.TypeOf(obj).Kind() != reflect.Ptr {
 		if actualObj, ok := obj.(interface{ GetActualInstanceValue() interface{} }); ok {
 			return fmt.Sprintf("%v", actualObj.GetActualInstanceValue())
@@ -178,11 +177,11 @@ func parameterValueToString( obj interface{}, key string ) string {
 
 		return fmt.Sprintf("%v", obj)
 	}
-	var param,ok = obj.(MappedNullable)
+	var param, ok = obj.(MappedNullable)
 	if !ok {
 		return ""
 	}
-	dataMap,err := param.ToMap()
+	dataMap, err := param.ToMap()
 	if err != nil {
 		return ""
 	}
@@ -198,85 +197,85 @@ func parameterAddToHeaderOrQuery(headerOrQueryParams interface{}, keyPrefix stri
 		value = "null"
 	} else {
 		switch v.Kind() {
-			case reflect.Invalid:
-				value = "invalid"
+		case reflect.Invalid:
+			value = "invalid"
 
-			case reflect.Struct:
-				if t,ok := obj.(MappedNullable); ok {
-					dataMap,err := t.ToMap()
-					if err != nil {
-						return
-					}
-					parameterAddToHeaderOrQuery(headerOrQueryParams, keyPrefix, dataMap, style, collectionType)
+		case reflect.Struct:
+			if t, ok := obj.(MappedNullable); ok {
+				dataMap, err := t.ToMap()
+				if err != nil {
 					return
 				}
-				if t, ok := obj.(time.Time); ok {
-					parameterAddToHeaderOrQuery(headerOrQueryParams, keyPrefix, t.Format(time.RFC3339Nano), style, collectionType)
-					return
-				}
-				value = v.Type().String() + " value"
-			case reflect.Slice:
-				var indValue = reflect.ValueOf(obj)
-				if indValue == reflect.ValueOf(nil) {
-					return
-				}
-				var lenIndValue = indValue.Len()
-				for i:=0;i<lenIndValue;i++ {
-					var arrayValue = indValue.Index(i)
-					var keyPrefixForCollectionType = keyPrefix
-					if style == "deepObject" {
-						keyPrefixForCollectionType = keyPrefix + "[" + strconv.Itoa(i) + "]"
-					}
-					parameterAddToHeaderOrQuery(headerOrQueryParams, keyPrefixForCollectionType, arrayValue.Interface(), style, collectionType)
-				}
+				parameterAddToHeaderOrQuery(headerOrQueryParams, keyPrefix, dataMap, style, collectionType)
 				return
-
-			case reflect.Map:
-				var indValue = reflect.ValueOf(obj)
-				if indValue == reflect.ValueOf(nil) {
-					return
-				}
-				iter := indValue.MapRange()
-				for iter.Next() {
-					k,v := iter.Key(), iter.Value()
-					parameterAddToHeaderOrQuery(headerOrQueryParams, fmt.Sprintf("%s[%s]", keyPrefix, k.String()), v.Interface(), style, collectionType)
-				}
+			}
+			if t, ok := obj.(time.Time); ok {
+				parameterAddToHeaderOrQuery(headerOrQueryParams, keyPrefix, t.Format(time.RFC3339Nano), style, collectionType)
 				return
-
-			case reflect.Interface:
-				fallthrough
-			case reflect.Ptr:
-				parameterAddToHeaderOrQuery(headerOrQueryParams, keyPrefix, v.Elem().Interface(), style, collectionType)
+			}
+			value = v.Type().String() + " value"
+		case reflect.Slice:
+			var indValue = reflect.ValueOf(obj)
+			if indValue == reflect.ValueOf(nil) {
 				return
+			}
+			var lenIndValue = indValue.Len()
+			for i := 0; i < lenIndValue; i++ {
+				var arrayValue = indValue.Index(i)
+				var keyPrefixForCollectionType = keyPrefix
+				if style == "deepObject" {
+					keyPrefixForCollectionType = keyPrefix + "[" + strconv.Itoa(i) + "]"
+				}
+				parameterAddToHeaderOrQuery(headerOrQueryParams, keyPrefixForCollectionType, arrayValue.Interface(), style, collectionType)
+			}
+			return
 
-			case reflect.Int, reflect.Int8, reflect.Int16,
-				reflect.Int32, reflect.Int64:
-				value = strconv.FormatInt(v.Int(), 10)
-			case reflect.Uint, reflect.Uint8, reflect.Uint16,
-				reflect.Uint32, reflect.Uint64, reflect.Uintptr:
-				value = strconv.FormatUint(v.Uint(), 10)
-			case reflect.Float32, reflect.Float64:
-				value = strconv.FormatFloat(v.Float(), 'g', -1, 32)
-			case reflect.Bool:
-				value = strconv.FormatBool(v.Bool())
-			case reflect.String:
-				value = v.String()
-			default:
-				value = v.Type().String() + " value"
+		case reflect.Map:
+			var indValue = reflect.ValueOf(obj)
+			if indValue == reflect.ValueOf(nil) {
+				return
+			}
+			iter := indValue.MapRange()
+			for iter.Next() {
+				k, v := iter.Key(), iter.Value()
+				parameterAddToHeaderOrQuery(headerOrQueryParams, fmt.Sprintf("%s[%s]", keyPrefix, k.String()), v.Interface(), style, collectionType)
+			}
+			return
+
+		case reflect.Interface:
+			fallthrough
+		case reflect.Ptr:
+			parameterAddToHeaderOrQuery(headerOrQueryParams, keyPrefix, v.Elem().Interface(), style, collectionType)
+			return
+
+		case reflect.Int, reflect.Int8, reflect.Int16,
+			reflect.Int32, reflect.Int64:
+			value = strconv.FormatInt(v.Int(), 10)
+		case reflect.Uint, reflect.Uint8, reflect.Uint16,
+			reflect.Uint32, reflect.Uint64, reflect.Uintptr:
+			value = strconv.FormatUint(v.Uint(), 10)
+		case reflect.Float32, reflect.Float64:
+			value = strconv.FormatFloat(v.Float(), 'g', -1, 32)
+		case reflect.Bool:
+			value = strconv.FormatBool(v.Bool())
+		case reflect.String:
+			value = v.String()
+		default:
+			value = v.Type().String() + " value"
 		}
 	}
 
 	switch valuesMap := headerOrQueryParams.(type) {
-		case url.Values:
-			if collectionType == "csv" && valuesMap.Get(keyPrefix) != "" {
-				valuesMap.Set(keyPrefix, valuesMap.Get(keyPrefix) + "," + value)
-			} else {
-				valuesMap.Add(keyPrefix, value)
-			}
-			break
-		case map[string]string:
-			valuesMap[keyPrefix] = value
-			break
+	case url.Values:
+		if collectionType == "csv" && valuesMap.Get(keyPrefix) != "" {
+			valuesMap.Set(keyPrefix, valuesMap.Get(keyPrefix)+","+value)
+		} else {
+			valuesMap.Add(keyPrefix, value)
+		}
+		break
+	case map[string]string:
+		valuesMap[keyPrefix] = value
+		break
 	}
 }
 
@@ -321,9 +320,9 @@ func (c *APIClient) GetConfig() *Configuration {
 }
 
 type formFile struct {
-		fileBytes []byte
-		fileName string
-		formFileName string
+	fileBytes    []byte
+	fileName     string
+	formFileName string
 }
 
 // prepareRequest build the request
@@ -377,11 +376,11 @@ func (c *APIClient) prepareRequest(
 				w.Boundary()
 				part, err := w.CreateFormFile(formFile.formFileName, filepath.Base(formFile.fileName))
 				if err != nil {
-						return nil, err
+					return nil, err
 				}
 				_, err = part.Write(formFile.fileBytes)
 				if err != nil {
-						return nil, err
+					return nil, err
 				}
 			}
 		}

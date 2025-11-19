@@ -1,7 +1,7 @@
 /*
 N-central API-Service
 
-<h3>API Access</h3> <p>In order to use the API-Service endpoints, ensure the following prerequisites are met:</p> <ol>     <li>User is created in N-central with appropriate permissions and configuration         (roles, access groups, MFA disabled, 2FA disabled).</li>     <li>API access is set up in N-central by having a JWT         (Json Web Token, referred to as \"N-central User-API Token\") generated,         acting as the permanent secret solely used for fetching access and refresh tokens.</li> </ol> <p>To access the API-Service endpoints, the JWT must first be exchanged with access and refresh tokens:</p> <ul>     <li>         <p><b>Using Swagger UI:</b></p>         <ol>             <li>Click on the <b>\"Authorize\"</b> button and enter the JWT into the value field                 under <b>\"N-central User-API Token (JWT)\"</b>, then navigate to                 the <code>/api/auth/authenticate</code> endpoint, click <b>\"Try it out\"</b>                 and then <b>\"Execute\"</b>.                 <br/>The new “Access Token” and “Refresh Token” fields will be available in the “Server Response”                 section below. Note that the expiry is 3600s ( 1h ). Copy the value of the access token.</li>             <li>Click on the <b>lock icon</b> to the right of any endpoint                 (or the <b>\"Authorize\"</b> button at the top), enter the access token in the                 <b>\"API-Access Token\"</b> field and click <b>\"Authorize\"</b>.</li>             <li>To call an API-Service endpoint, navigate to it, click <b>\"Try it out\"</b> button and             then <b>\"Execute\"</b>. If the steps above were successful, the access token is included in requests             automatically.</li>         </ol>     </li>     <li>         <p><b>Using a different HTTP client:</b></p>         <ol>             <li>Call the <code>/api/auth/authenticate</code> endpoint.                 The JWT token must be specified under the <code>Authorization</code> header,                 in the form <code>Bearer &lt;YOUR_JWT&gt;\"</code>.                 <br/>The access and refresh tokens are present in the response.</li>             <li>When calling API-Service endpoints, make sure to specify the <b>access token</b> in             the <code>Authorization</code> header as <code>Bearer &lt;ACCESS_TOKEN&gt;</code>.</li>         </ol>     </li> </ul> <h3>API Pagination & Sorting</h3> <p>Certain API-Service query endpoints support pagination and sorting through the use of query parameters.</p> <p><b>Pagination query parameters:</b></p> <ul>     <li>pageSize: number between 1 and 1000 specifying how many items to return for each page (if available).         If unspecified, the default is 50.</li>     <li>pageNumber: number specifying what page of data to retrieve, starting from 1 as the first page.         If unspecified, the default is 1.</li> </ul> <p>A paginated response contains several related fields, such as pageSize, pageNumber, itemCount, totalItems,     totalPages, _links (first, last, previous and next pages) and _warning (containing any warning messages,     if present).</p> <p><b>Sorting query parameters:</b></p> <ul>     <li>sortBy: the name of the field to sort the results by. If unspecified, no sorting is applied.</li>     <li>sortOrder: the case insensitive sorting direction supporting ASC/ASCENDING/NATURAL and         DESC/DESCENDING/REVERSE. If unspecified, the default is ASC.</li> </ul> <h3>API Rate Limiting</h3> <p>The API-Service endpoints are rate limited to ensure the stability, availability and performance of     the overall system.</p> <p>Upon reaching such a rate limit, the endpoints return HTTP Status 429 - Too Many Requests.</p> <p>The system will accept further requests once existing in-flight requests are completed.</p> 
+<h3>API Access</h3> <p>In order to use the API-Service endpoints, ensure the following prerequisites are met:</p> <ol>     <li>User is created in N-central with appropriate permissions and configuration         (roles, access groups, MFA disabled, 2FA disabled).</li>     <li>API access is set up in N-central by having a JWT         (Json Web Token, referred to as \"N-central User-API Token\") generated,         acting as the permanent secret solely used for fetching access and refresh tokens.</li> </ol> <p>To access the API-Service endpoints, the JWT must first be exchanged with access and refresh tokens:</p> <ul>     <li>         <p><b>Using Swagger UI:</b></p>         <ol>             <li>Click on the <b>\"Authorize\"</b> button and enter the JWT into the value field                 under <b>\"N-central User-API Token (JWT)\"</b>, then navigate to                 the <code>/api/auth/authenticate</code> endpoint, click <b>\"Try it out\"</b>                 and then <b>\"Execute\"</b>.                 <br/>The new “Access Token” and “Refresh Token” fields will be available in the “Server Response”                 section below. Note that the expiry is 3600s ( 1h ). Copy the value of the access token.</li>             <li>Click on the <b>lock icon</b> to the right of any endpoint                 (or the <b>\"Authorize\"</b> button at the top), enter the access token in the                 <b>\"API-Access Token\"</b> field and click <b>\"Authorize\"</b>.</li>             <li>To call an API-Service endpoint, navigate to it, click <b>\"Try it out\"</b> button and             then <b>\"Execute\"</b>. If the steps above were successful, the access token is included in requests             automatically.</li>         </ol>     </li>     <li>         <p><b>Using a different HTTP client:</b></p>         <ol>             <li>Call the <code>/api/auth/authenticate</code> endpoint.                 The JWT token must be specified under the <code>Authorization</code> header,                 in the form <code>Bearer &lt;YOUR_JWT&gt;\"</code>.                 <br/>The access and refresh tokens are present in the response.</li>             <li>When calling API-Service endpoints, make sure to specify the <b>access token</b> in             the <code>Authorization</code> header as <code>Bearer &lt;ACCESS_TOKEN&gt;</code>.</li>         </ol>     </li> </ul> <h3>API Pagination & Sorting</h3> <p>Certain API-Service query endpoints support pagination and sorting through the use of query parameters.</p> <p><b>Pagination query parameters:</b></p> <ul>     <li>pageSize: number between 1 and 1000 specifying how many items to return for each page (if available).         If unspecified, the default is 50.</li>     <li>pageNumber: number specifying what page of data to retrieve, starting from 1 as the first page.         If unspecified, the default is 1.</li> </ul> <p>A paginated response contains several related fields, such as pageSize, pageNumber, itemCount, totalItems,     totalPages, _links (first, last, previous and next pages) and _warning (containing any warning messages,     if present).</p> <p><b>Sorting query parameters:</b></p> <ul>     <li>sortBy: the name of the field to sort the results by. If unspecified, no sorting is applied.</li>     <li>sortOrder: the case insensitive sorting direction supporting ASC/ASCENDING/NATURAL and         DESC/DESCENDING/REVERSE. If unspecified, the default is ASC.</li> </ul> <h3>API Rate Limiting</h3> <p>The API-Service endpoints are rate limited to ensure the stability, availability and performance of     the overall system.</p> <p>Upon reaching such a rate limit, the endpoints return HTTP Status 429 - Too Many Requests.</p> <p>The system will accept further requests once existing in-flight requests are completed.</p>
 
 API version: 1.0
 */
@@ -19,14 +19,13 @@ import (
 	"strings"
 )
 
-
 // OrganizationUnitsAPIService OrganizationUnitsAPI service
 type OrganizationUnitsAPIService service
 
 type ApiCreateCustomerRequest struct {
-	ctx context.Context
-	ApiService *OrganizationUnitsAPIService
-	soId string
+	ctx              context.Context
+	ApiService       *OrganizationUnitsAPIService
+	soId             string
 	customerCreation *CustomerCreation
 }
 
@@ -45,26 +44,27 @@ CreateCustomer PREVIEW: Creates a customer.
 
 Creates a new customer with the specified details.<br/><br/><b>NOTE:</b>This endpoint is currently in a preview stage.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param soId
- @return ApiCreateCustomerRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param soId
+	@return ApiCreateCustomerRequest
 */
 func (a *OrganizationUnitsAPIService) CreateCustomer(ctx context.Context, soId string) ApiCreateCustomerRequest {
 	return ApiCreateCustomerRequest{
 		ApiService: a,
-		ctx: ctx,
-		soId: soId,
+		ctx:        ctx,
+		soId:       soId,
 	}
 }
 
 // Execute executes the request
-//  @return CustomerCreation
+//
+//	@return CustomerCreation
 func (a *OrganizationUnitsAPIService) CreateCustomerExecute(r ApiCreateCustomerRequest) (*CustomerCreation, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *CustomerCreation
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *CustomerCreation
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OrganizationUnitsAPIService.CreateCustomer")
@@ -130,8 +130,8 @@ func (a *OrganizationUnitsAPIService) CreateCustomerExecute(r ApiCreateCustomerR
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -141,8 +141,8 @@ func (a *OrganizationUnitsAPIService) CreateCustomerExecute(r ApiCreateCustomerR
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
@@ -152,8 +152,8 @@ func (a *OrganizationUnitsAPIService) CreateCustomerExecute(r ApiCreateCustomerR
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
@@ -163,8 +163,8 @@ func (a *OrganizationUnitsAPIService) CreateCustomerExecute(r ApiCreateCustomerR
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
@@ -174,8 +174,8 @@ func (a *OrganizationUnitsAPIService) CreateCustomerExecute(r ApiCreateCustomerR
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -194,8 +194,8 @@ func (a *OrganizationUnitsAPIService) CreateCustomerExecute(r ApiCreateCustomerR
 }
 
 type ApiCreateServiceOrganizationRequest struct {
-	ctx context.Context
-	ApiService *OrganizationUnitsAPIService
+	ctx                         context.Context
+	ApiService                  *OrganizationUnitsAPIService
 	serviceOrganizationCreation *ServiceOrganizationCreation
 }
 
@@ -214,24 +214,25 @@ CreateServiceOrganization PREVIEW: Creates a new service organization (SO).
 
 Creates a new service organization with the specified details.<br/><br/><b>NOTE:</b>This endpoint is currently in a preview stage.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiCreateServiceOrganizationRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiCreateServiceOrganizationRequest
 */
 func (a *OrganizationUnitsAPIService) CreateServiceOrganization(ctx context.Context) ApiCreateServiceOrganizationRequest {
 	return ApiCreateServiceOrganizationRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return ServiceOrganizationCreated
+//
+//	@return ServiceOrganizationCreated
 func (a *OrganizationUnitsAPIService) CreateServiceOrganizationExecute(r ApiCreateServiceOrganizationRequest) (*ServiceOrganizationCreated, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *ServiceOrganizationCreated
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *ServiceOrganizationCreated
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OrganizationUnitsAPIService.CreateServiceOrganization")
@@ -296,8 +297,8 @@ func (a *OrganizationUnitsAPIService) CreateServiceOrganizationExecute(r ApiCrea
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -307,8 +308,8 @@ func (a *OrganizationUnitsAPIService) CreateServiceOrganizationExecute(r ApiCrea
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
@@ -318,8 +319,8 @@ func (a *OrganizationUnitsAPIService) CreateServiceOrganizationExecute(r ApiCrea
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
@@ -329,8 +330,8 @@ func (a *OrganizationUnitsAPIService) CreateServiceOrganizationExecute(r ApiCrea
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
@@ -340,8 +341,8 @@ func (a *OrganizationUnitsAPIService) CreateServiceOrganizationExecute(r ApiCrea
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -360,9 +361,9 @@ func (a *OrganizationUnitsAPIService) CreateServiceOrganizationExecute(r ApiCrea
 }
 
 type ApiCreateSiteRequest struct {
-	ctx context.Context
-	ApiService *OrganizationUnitsAPIService
-	customerId string
+	ctx          context.Context
+	ApiService   *OrganizationUnitsAPIService
+	customerId   string
 	siteCreation *SiteCreation
 }
 
@@ -381,26 +382,27 @@ CreateSite PREVIEW: Creates a site.
 
 Creates a new site with the specified details.<br/><br/><b>NOTE:</b>This endpoint is currently in a preview stage.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param customerId
- @return ApiCreateSiteRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param customerId
+	@return ApiCreateSiteRequest
 */
 func (a *OrganizationUnitsAPIService) CreateSite(ctx context.Context, customerId string) ApiCreateSiteRequest {
 	return ApiCreateSiteRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 		customerId: customerId,
 	}
 }
 
 // Execute executes the request
-//  @return SiteCreated
+//
+//	@return SiteCreated
 func (a *OrganizationUnitsAPIService) CreateSiteExecute(r ApiCreateSiteRequest) (*SiteCreated, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *SiteCreated
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *SiteCreated
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OrganizationUnitsAPIService.CreateSite")
@@ -466,8 +468,8 @@ func (a *OrganizationUnitsAPIService) CreateSiteExecute(r ApiCreateSiteRequest) 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -477,8 +479,8 @@ func (a *OrganizationUnitsAPIService) CreateSiteExecute(r ApiCreateSiteRequest) 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
@@ -488,8 +490,8 @@ func (a *OrganizationUnitsAPIService) CreateSiteExecute(r ApiCreateSiteRequest) 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
@@ -499,8 +501,8 @@ func (a *OrganizationUnitsAPIService) CreateSiteExecute(r ApiCreateSiteRequest) 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
@@ -510,8 +512,8 @@ func (a *OrganizationUnitsAPIService) CreateSiteExecute(r ApiCreateSiteRequest) 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -530,7 +532,7 @@ func (a *OrganizationUnitsAPIService) CreateSiteExecute(r ApiCreateSiteRequest) 
 }
 
 type ApiGetCustomerRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *OrganizationUnitsAPIService
 	customerId int32
 }
@@ -544,26 +546,27 @@ GetCustomer PREVIEW: Retrieve a customer.
 
 Returns a customer.<br/><br/><b>NOTE:</b>This endpoint is currently in a preview stage.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param customerId The ID of the a customer.
- @return ApiGetCustomerRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param customerId The ID of the a customer.
+	@return ApiGetCustomerRequest
 */
 func (a *OrganizationUnitsAPIService) GetCustomer(ctx context.Context, customerId int32) ApiGetCustomerRequest {
 	return ApiGetCustomerRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 		customerId: customerId,
 	}
 }
 
 // Execute executes the request
-//  @return Customer
+//
+//	@return Customer
 func (a *OrganizationUnitsAPIService) GetCustomerExecute(r ApiGetCustomerRequest) (*Customer, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Customer
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *Customer
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OrganizationUnitsAPIService.GetCustomer")
@@ -624,8 +627,8 @@ func (a *OrganizationUnitsAPIService) GetCustomerExecute(r ApiGetCustomerRequest
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -635,8 +638,8 @@ func (a *OrganizationUnitsAPIService) GetCustomerExecute(r ApiGetCustomerRequest
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
@@ -646,8 +649,8 @@ func (a *OrganizationUnitsAPIService) GetCustomerExecute(r ApiGetCustomerRequest
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
@@ -657,8 +660,8 @@ func (a *OrganizationUnitsAPIService) GetCustomerExecute(r ApiGetCustomerRequest
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
@@ -668,8 +671,8 @@ func (a *OrganizationUnitsAPIService) GetCustomerExecute(r ApiGetCustomerRequest
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -688,9 +691,9 @@ func (a *OrganizationUnitsAPIService) GetCustomerExecute(r ApiGetCustomerRequest
 }
 
 type ApiGetOrganizationUnitRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *OrganizationUnitsAPIService
-	orgUnitId int32
+	orgUnitId  int32
 }
 
 func (r ApiGetOrganizationUnitRequest) Execute() (*OrganizationUnit, *http.Response, error) {
@@ -702,26 +705,27 @@ GetOrganizationUnit PREVIEW: Retrieve an organization unit.
 
 Returns an organization unit.<br/><br/><b>NOTE:</b>This endpoint is currently in a preview stage.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param orgUnitId The ID of the organization unit.
- @return ApiGetOrganizationUnitRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param orgUnitId The ID of the organization unit.
+	@return ApiGetOrganizationUnitRequest
 */
 func (a *OrganizationUnitsAPIService) GetOrganizationUnit(ctx context.Context, orgUnitId int32) ApiGetOrganizationUnitRequest {
 	return ApiGetOrganizationUnitRequest{
 		ApiService: a,
-		ctx: ctx,
-		orgUnitId: orgUnitId,
+		ctx:        ctx,
+		orgUnitId:  orgUnitId,
 	}
 }
 
 // Execute executes the request
-//  @return OrganizationUnit
+//
+//	@return OrganizationUnit
 func (a *OrganizationUnitsAPIService) GetOrganizationUnitExecute(r ApiGetOrganizationUnitRequest) (*OrganizationUnit, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *OrganizationUnit
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *OrganizationUnit
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OrganizationUnitsAPIService.GetOrganizationUnit")
@@ -782,8 +786,8 @@ func (a *OrganizationUnitsAPIService) GetOrganizationUnitExecute(r ApiGetOrganiz
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -793,8 +797,8 @@ func (a *OrganizationUnitsAPIService) GetOrganizationUnitExecute(r ApiGetOrganiz
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
@@ -804,8 +808,8 @@ func (a *OrganizationUnitsAPIService) GetOrganizationUnitExecute(r ApiGetOrganiz
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
@@ -815,8 +819,8 @@ func (a *OrganizationUnitsAPIService) GetOrganizationUnitExecute(r ApiGetOrganiz
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
@@ -826,8 +830,8 @@ func (a *OrganizationUnitsAPIService) GetOrganizationUnitExecute(r ApiGetOrganiz
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -846,9 +850,9 @@ func (a *OrganizationUnitsAPIService) GetOrganizationUnitExecute(r ApiGetOrganiz
 }
 
 type ApiGetServiceOrganizationRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *OrganizationUnitsAPIService
-	soId int32
+	soId       int32
 }
 
 func (r ApiGetServiceOrganizationRequest) Execute() (*ServiceOrganization, *http.Response, error) {
@@ -860,26 +864,27 @@ GetServiceOrganization PREVIEW: Retrieve a service organization.
 
 Returns a service organization.<br/><br/><b>NOTE:</b>This endpoint is currently in a preview stage.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param soId The ID of the a service organization.
- @return ApiGetServiceOrganizationRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param soId The ID of the a service organization.
+	@return ApiGetServiceOrganizationRequest
 */
 func (a *OrganizationUnitsAPIService) GetServiceOrganization(ctx context.Context, soId int32) ApiGetServiceOrganizationRequest {
 	return ApiGetServiceOrganizationRequest{
 		ApiService: a,
-		ctx: ctx,
-		soId: soId,
+		ctx:        ctx,
+		soId:       soId,
 	}
 }
 
 // Execute executes the request
-//  @return ServiceOrganization
+//
+//	@return ServiceOrganization
 func (a *OrganizationUnitsAPIService) GetServiceOrganizationExecute(r ApiGetServiceOrganizationRequest) (*ServiceOrganization, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *ServiceOrganization
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *ServiceOrganization
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OrganizationUnitsAPIService.GetServiceOrganization")
@@ -940,8 +945,8 @@ func (a *OrganizationUnitsAPIService) GetServiceOrganizationExecute(r ApiGetServ
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -951,8 +956,8 @@ func (a *OrganizationUnitsAPIService) GetServiceOrganizationExecute(r ApiGetServ
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
@@ -962,8 +967,8 @@ func (a *OrganizationUnitsAPIService) GetServiceOrganizationExecute(r ApiGetServ
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
@@ -973,8 +978,8 @@ func (a *OrganizationUnitsAPIService) GetServiceOrganizationExecute(r ApiGetServ
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
@@ -984,8 +989,8 @@ func (a *OrganizationUnitsAPIService) GetServiceOrganizationExecute(r ApiGetServ
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -1004,9 +1009,9 @@ func (a *OrganizationUnitsAPIService) GetServiceOrganizationExecute(r ApiGetServ
 }
 
 type ApiGetSiteRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *OrganizationUnitsAPIService
-	siteId int32
+	siteId     int32
 }
 
 func (r ApiGetSiteRequest) Execute() (*Site, *http.Response, error) {
@@ -1018,26 +1023,27 @@ GetSite PREVIEW: Retrieve a site.
 
 Returns a site.<br/><br/><b>NOTE:</b>This endpoint is currently in a preview stage.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param siteId The ID of the a site.
- @return ApiGetSiteRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param siteId The ID of the a site.
+	@return ApiGetSiteRequest
 */
 func (a *OrganizationUnitsAPIService) GetSite(ctx context.Context, siteId int32) ApiGetSiteRequest {
 	return ApiGetSiteRequest{
 		ApiService: a,
-		ctx: ctx,
-		siteId: siteId,
+		ctx:        ctx,
+		siteId:     siteId,
 	}
 }
 
 // Execute executes the request
-//  @return Site
+//
+//	@return Site
 func (a *OrganizationUnitsAPIService) GetSiteExecute(r ApiGetSiteRequest) (*Site, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Site
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *Site
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OrganizationUnitsAPIService.GetSite")
@@ -1098,8 +1104,8 @@ func (a *OrganizationUnitsAPIService) GetSiteExecute(r ApiGetSiteRequest) (*Site
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -1109,8 +1115,8 @@ func (a *OrganizationUnitsAPIService) GetSiteExecute(r ApiGetSiteRequest) (*Site
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
@@ -1120,8 +1126,8 @@ func (a *OrganizationUnitsAPIService) GetSiteExecute(r ApiGetSiteRequest) (*Site
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
@@ -1131,8 +1137,8 @@ func (a *OrganizationUnitsAPIService) GetSiteExecute(r ApiGetSiteRequest) (*Site
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
@@ -1142,8 +1148,8 @@ func (a *OrganizationUnitsAPIService) GetSiteExecute(r ApiGetSiteRequest) (*Site
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -1162,14 +1168,14 @@ func (a *OrganizationUnitsAPIService) GetSiteExecute(r ApiGetSiteRequest) (*Site
 }
 
 type ApiListCustomersRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *OrganizationUnitsAPIService
-	soId int32
+	soId       int32
 	pageNumber *int32
-	pageSize *int32
-	select_ *string
-	sortBy *string
-	sortOrder *string
+	pageSize   *int32
+	select_    *string
+	sortBy     *string
+	sortOrder  *string
 }
 
 // The page number to retrieve. Starts at 1. If not provided, defaults to the first page.
@@ -1211,26 +1217,27 @@ ListCustomers PREVIEW: Retrieve a list of all customers under a service organiza
 
 Returns a list of all customers under a service organization.<br/><br/><b>NOTE:</b>This endpoint is currently in a preview stage.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param soId The ID of the a service organization.
- @return ApiListCustomersRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param soId The ID of the a service organization.
+	@return ApiListCustomersRequest
 */
 func (a *OrganizationUnitsAPIService) ListCustomers(ctx context.Context, soId int32) ApiListCustomersRequest {
 	return ApiListCustomersRequest{
 		ApiService: a,
-		ctx: ctx,
-		soId: soId,
+		ctx:        ctx,
+		soId:       soId,
 	}
 }
 
 // Execute executes the request
-//  @return ListResponseCustomer
+//
+//	@return ListResponseCustomer
 func (a *OrganizationUnitsAPIService) ListCustomersExecute(r ApiListCustomersRequest) (*ListResponseCustomer, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *ListResponseCustomer
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *ListResponseCustomer
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OrganizationUnitsAPIService.ListCustomers")
@@ -1309,8 +1316,8 @@ func (a *OrganizationUnitsAPIService) ListCustomersExecute(r ApiListCustomersReq
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -1320,8 +1327,8 @@ func (a *OrganizationUnitsAPIService) ListCustomersExecute(r ApiListCustomersReq
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
@@ -1331,8 +1338,8 @@ func (a *OrganizationUnitsAPIService) ListCustomersExecute(r ApiListCustomersReq
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
@@ -1342,8 +1349,8 @@ func (a *OrganizationUnitsAPIService) ListCustomersExecute(r ApiListCustomersReq
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
@@ -1353,8 +1360,8 @@ func (a *OrganizationUnitsAPIService) ListCustomersExecute(r ApiListCustomersReq
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -1373,13 +1380,13 @@ func (a *OrganizationUnitsAPIService) ListCustomersExecute(r ApiListCustomersReq
 }
 
 type ApiListCustomers1Request struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *OrganizationUnitsAPIService
 	pageNumber *int32
-	pageSize *int32
-	select_ *string
-	sortBy *string
-	sortOrder *string
+	pageSize   *int32
+	select_    *string
+	sortBy     *string
+	sortOrder  *string
 }
 
 // The page number to retrieve. Starts at 1. If not provided, defaults to the first page.
@@ -1421,24 +1428,25 @@ ListCustomers1 Retrieve a list of all customers.
 
 Returns a list of all customers.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiListCustomers1Request
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiListCustomers1Request
 */
 func (a *OrganizationUnitsAPIService) ListCustomers1(ctx context.Context) ApiListCustomers1Request {
 	return ApiListCustomers1Request{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return ListResponseCustomer
+//
+//	@return ListResponseCustomer
 func (a *OrganizationUnitsAPIService) ListCustomers1Execute(r ApiListCustomers1Request) (*ListResponseCustomer, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *ListResponseCustomer
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *ListResponseCustomer
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OrganizationUnitsAPIService.ListCustomers1")
@@ -1516,8 +1524,8 @@ func (a *OrganizationUnitsAPIService) ListCustomers1Execute(r ApiListCustomers1R
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -1527,8 +1535,8 @@ func (a *OrganizationUnitsAPIService) ListCustomers1Execute(r ApiListCustomers1R
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
@@ -1538,8 +1546,8 @@ func (a *OrganizationUnitsAPIService) ListCustomers1Execute(r ApiListCustomers1R
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
@@ -1549,8 +1557,8 @@ func (a *OrganizationUnitsAPIService) ListCustomers1Execute(r ApiListCustomers1R
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
@@ -1560,8 +1568,8 @@ func (a *OrganizationUnitsAPIService) ListCustomers1Execute(r ApiListCustomers1R
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -1580,14 +1588,14 @@ func (a *OrganizationUnitsAPIService) ListCustomers1Execute(r ApiListCustomers1R
 }
 
 type ApiListOrganizationUnitChildrenRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *OrganizationUnitsAPIService
-	orgUnitId int32
+	orgUnitId  int32
 	pageNumber *int32
-	pageSize *int32
-	select_ *string
-	sortBy *string
-	sortOrder *string
+	pageSize   *int32
+	select_    *string
+	sortBy     *string
+	sortOrder  *string
 }
 
 // The page number to retrieve. Starts at 1. If not provided, defaults to the first page.
@@ -1629,26 +1637,27 @@ ListOrganizationUnitChildren PREVIEW: Retrieve a list of all organization units 
 
 Returns a list of all organization units under the specific organization unit.<br/><br/><b>NOTE:</b>This endpoint is currently in a preview stage.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param orgUnitId PREVIEW: The ID of the parent organization unit.If specified, only the children of the specified organization unit are retrieved.Leave empty or unset to retrieve the unfiltered list.
- @return ApiListOrganizationUnitChildrenRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param orgUnitId PREVIEW: The ID of the parent organization unit.If specified, only the children of the specified organization unit are retrieved.Leave empty or unset to retrieve the unfiltered list.
+	@return ApiListOrganizationUnitChildrenRequest
 */
 func (a *OrganizationUnitsAPIService) ListOrganizationUnitChildren(ctx context.Context, orgUnitId int32) ApiListOrganizationUnitChildrenRequest {
 	return ApiListOrganizationUnitChildrenRequest{
 		ApiService: a,
-		ctx: ctx,
-		orgUnitId: orgUnitId,
+		ctx:        ctx,
+		orgUnitId:  orgUnitId,
 	}
 }
 
 // Execute executes the request
-//  @return ListResponseOrganizationUnit
+//
+//	@return ListResponseOrganizationUnit
 func (a *OrganizationUnitsAPIService) ListOrganizationUnitChildrenExecute(r ApiListOrganizationUnitChildrenRequest) (*ListResponseOrganizationUnit, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *ListResponseOrganizationUnit
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *ListResponseOrganizationUnit
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OrganizationUnitsAPIService.ListOrganizationUnitChildren")
@@ -1727,8 +1736,8 @@ func (a *OrganizationUnitsAPIService) ListOrganizationUnitChildrenExecute(r ApiL
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -1738,8 +1747,8 @@ func (a *OrganizationUnitsAPIService) ListOrganizationUnitChildrenExecute(r ApiL
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
@@ -1749,8 +1758,8 @@ func (a *OrganizationUnitsAPIService) ListOrganizationUnitChildrenExecute(r ApiL
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
@@ -1760,8 +1769,8 @@ func (a *OrganizationUnitsAPIService) ListOrganizationUnitChildrenExecute(r ApiL
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
@@ -1771,8 +1780,8 @@ func (a *OrganizationUnitsAPIService) ListOrganizationUnitChildrenExecute(r ApiL
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -1791,13 +1800,13 @@ func (a *OrganizationUnitsAPIService) ListOrganizationUnitChildrenExecute(r ApiL
 }
 
 type ApiListOrganizationUnitsRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *OrganizationUnitsAPIService
 	pageNumber *int32
-	pageSize *int32
-	select_ *string
-	sortBy *string
-	sortOrder *string
+	pageSize   *int32
+	select_    *string
+	sortBy     *string
+	sortOrder  *string
 }
 
 // The page number to retrieve. Starts at 1. If not provided, defaults to the first page.
@@ -1839,24 +1848,25 @@ ListOrganizationUnits Retrieve a list of all organization units.
 
 Returns a list of all organization units.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiListOrganizationUnitsRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiListOrganizationUnitsRequest
 */
 func (a *OrganizationUnitsAPIService) ListOrganizationUnits(ctx context.Context) ApiListOrganizationUnitsRequest {
 	return ApiListOrganizationUnitsRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return ListResponseOrganizationUnit
+//
+//	@return ListResponseOrganizationUnit
 func (a *OrganizationUnitsAPIService) ListOrganizationUnitsExecute(r ApiListOrganizationUnitsRequest) (*ListResponseOrganizationUnit, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *ListResponseOrganizationUnit
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *ListResponseOrganizationUnit
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OrganizationUnitsAPIService.ListOrganizationUnits")
@@ -1934,8 +1944,8 @@ func (a *OrganizationUnitsAPIService) ListOrganizationUnitsExecute(r ApiListOrga
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -1945,8 +1955,8 @@ func (a *OrganizationUnitsAPIService) ListOrganizationUnitsExecute(r ApiListOrga
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
@@ -1956,8 +1966,8 @@ func (a *OrganizationUnitsAPIService) ListOrganizationUnitsExecute(r ApiListOrga
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
@@ -1967,8 +1977,8 @@ func (a *OrganizationUnitsAPIService) ListOrganizationUnitsExecute(r ApiListOrga
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
@@ -1978,8 +1988,8 @@ func (a *OrganizationUnitsAPIService) ListOrganizationUnitsExecute(r ApiListOrga
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -1998,13 +2008,13 @@ func (a *OrganizationUnitsAPIService) ListOrganizationUnitsExecute(r ApiListOrga
 }
 
 type ApiListServiceOrganizationsRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *OrganizationUnitsAPIService
 	pageNumber *int32
-	pageSize *int32
-	select_ *string
-	sortBy *string
-	sortOrder *string
+	pageSize   *int32
+	select_    *string
+	sortBy     *string
+	sortOrder  *string
 }
 
 // The page number to retrieve. Starts at 1. If not provided, defaults to the first page.
@@ -2046,24 +2056,25 @@ ListServiceOrganizations Retrieve a list of all service organizations.
 
 Returns a list of all service organizations.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiListServiceOrganizationsRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiListServiceOrganizationsRequest
 */
 func (a *OrganizationUnitsAPIService) ListServiceOrganizations(ctx context.Context) ApiListServiceOrganizationsRequest {
 	return ApiListServiceOrganizationsRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return ListResponseServiceOrganization
+//
+//	@return ListResponseServiceOrganization
 func (a *OrganizationUnitsAPIService) ListServiceOrganizationsExecute(r ApiListServiceOrganizationsRequest) (*ListResponseServiceOrganization, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *ListResponseServiceOrganization
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *ListResponseServiceOrganization
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OrganizationUnitsAPIService.ListServiceOrganizations")
@@ -2141,8 +2152,8 @@ func (a *OrganizationUnitsAPIService) ListServiceOrganizationsExecute(r ApiListS
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -2152,8 +2163,8 @@ func (a *OrganizationUnitsAPIService) ListServiceOrganizationsExecute(r ApiListS
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
@@ -2163,8 +2174,8 @@ func (a *OrganizationUnitsAPIService) ListServiceOrganizationsExecute(r ApiListS
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
@@ -2174,8 +2185,8 @@ func (a *OrganizationUnitsAPIService) ListServiceOrganizationsExecute(r ApiListS
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
@@ -2185,8 +2196,8 @@ func (a *OrganizationUnitsAPIService) ListServiceOrganizationsExecute(r ApiListS
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -2205,13 +2216,13 @@ func (a *OrganizationUnitsAPIService) ListServiceOrganizationsExecute(r ApiListS
 }
 
 type ApiListSitesRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *OrganizationUnitsAPIService
 	pageNumber *int32
-	pageSize *int32
-	select_ *string
-	sortBy *string
-	sortOrder *string
+	pageSize   *int32
+	select_    *string
+	sortBy     *string
+	sortOrder  *string
 }
 
 // The page number to retrieve. Starts at 1. If not provided, defaults to the first page.
@@ -2253,24 +2264,25 @@ ListSites Retrieve a list of all sites.
 
 Returns a list of all sites.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiListSitesRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiListSitesRequest
 */
 func (a *OrganizationUnitsAPIService) ListSites(ctx context.Context) ApiListSitesRequest {
 	return ApiListSitesRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return ListResponseSite
+//
+//	@return ListResponseSite
 func (a *OrganizationUnitsAPIService) ListSitesExecute(r ApiListSitesRequest) (*ListResponseSite, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *ListResponseSite
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *ListResponseSite
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OrganizationUnitsAPIService.ListSites")
@@ -2348,8 +2360,8 @@ func (a *OrganizationUnitsAPIService) ListSitesExecute(r ApiListSitesRequest) (*
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -2359,8 +2371,8 @@ func (a *OrganizationUnitsAPIService) ListSitesExecute(r ApiListSitesRequest) (*
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
@@ -2370,8 +2382,8 @@ func (a *OrganizationUnitsAPIService) ListSitesExecute(r ApiListSitesRequest) (*
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
@@ -2381,8 +2393,8 @@ func (a *OrganizationUnitsAPIService) ListSitesExecute(r ApiListSitesRequest) (*
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
@@ -2392,8 +2404,8 @@ func (a *OrganizationUnitsAPIService) ListSitesExecute(r ApiListSitesRequest) (*
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -2412,14 +2424,14 @@ func (a *OrganizationUnitsAPIService) ListSitesExecute(r ApiListSitesRequest) (*
 }
 
 type ApiListSites1Request struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *OrganizationUnitsAPIService
 	customerId int32
 	pageNumber *int32
-	pageSize *int32
-	select_ *string
-	sortBy *string
-	sortOrder *string
+	pageSize   *int32
+	select_    *string
+	sortBy     *string
+	sortOrder  *string
 }
 
 // The page number to retrieve. Starts at 1. If not provided, defaults to the first page.
@@ -2461,26 +2473,27 @@ ListSites1 PREVIEW: Retrieve a list of sites under a customer.
 
 Returns a list of all sites under a customer.<br/><br/><br/><b>NOTE:</b>This endpoint is currently in a preview stage.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param customerId The ID of the a customer.
- @return ApiListSites1Request
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param customerId The ID of the a customer.
+	@return ApiListSites1Request
 */
 func (a *OrganizationUnitsAPIService) ListSites1(ctx context.Context, customerId int32) ApiListSites1Request {
 	return ApiListSites1Request{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 		customerId: customerId,
 	}
 }
 
 // Execute executes the request
-//  @return ListResponseSite
+//
+//	@return ListResponseSite
 func (a *OrganizationUnitsAPIService) ListSites1Execute(r ApiListSites1Request) (*ListResponseSite, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *ListResponseSite
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *ListResponseSite
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OrganizationUnitsAPIService.ListSites1")
@@ -2559,8 +2572,8 @@ func (a *OrganizationUnitsAPIService) ListSites1Execute(r ApiListSites1Request) 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -2570,8 +2583,8 @@ func (a *OrganizationUnitsAPIService) ListSites1Execute(r ApiListSites1Request) 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
@@ -2581,8 +2594,8 @@ func (a *OrganizationUnitsAPIService) ListSites1Execute(r ApiListSites1Request) 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
@@ -2592,8 +2605,8 @@ func (a *OrganizationUnitsAPIService) ListSites1Execute(r ApiListSites1Request) 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
@@ -2603,8 +2616,8 @@ func (a *OrganizationUnitsAPIService) ListSites1Execute(r ApiListSites1Request) 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr

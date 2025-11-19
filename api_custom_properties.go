@@ -1,7 +1,7 @@
 /*
 N-central API-Service
 
-<h3>API Access</h3> <p>In order to use the API-Service endpoints, ensure the following prerequisites are met:</p> <ol>     <li>User is created in N-central with appropriate permissions and configuration         (roles, access groups, MFA disabled, 2FA disabled).</li>     <li>API access is set up in N-central by having a JWT         (Json Web Token, referred to as \"N-central User-API Token\") generated,         acting as the permanent secret solely used for fetching access and refresh tokens.</li> </ol> <p>To access the API-Service endpoints, the JWT must first be exchanged with access and refresh tokens:</p> <ul>     <li>         <p><b>Using Swagger UI:</b></p>         <ol>             <li>Click on the <b>\"Authorize\"</b> button and enter the JWT into the value field                 under <b>\"N-central User-API Token (JWT)\"</b>, then navigate to                 the <code>/api/auth/authenticate</code> endpoint, click <b>\"Try it out\"</b>                 and then <b>\"Execute\"</b>.                 <br/>The new “Access Token” and “Refresh Token” fields will be available in the “Server Response”                 section below. Note that the expiry is 3600s ( 1h ). Copy the value of the access token.</li>             <li>Click on the <b>lock icon</b> to the right of any endpoint                 (or the <b>\"Authorize\"</b> button at the top), enter the access token in the                 <b>\"API-Access Token\"</b> field and click <b>\"Authorize\"</b>.</li>             <li>To call an API-Service endpoint, navigate to it, click <b>\"Try it out\"</b> button and             then <b>\"Execute\"</b>. If the steps above were successful, the access token is included in requests             automatically.</li>         </ol>     </li>     <li>         <p><b>Using a different HTTP client:</b></p>         <ol>             <li>Call the <code>/api/auth/authenticate</code> endpoint.                 The JWT token must be specified under the <code>Authorization</code> header,                 in the form <code>Bearer &lt;YOUR_JWT&gt;\"</code>.                 <br/>The access and refresh tokens are present in the response.</li>             <li>When calling API-Service endpoints, make sure to specify the <b>access token</b> in             the <code>Authorization</code> header as <code>Bearer &lt;ACCESS_TOKEN&gt;</code>.</li>         </ol>     </li> </ul> <h3>API Pagination & Sorting</h3> <p>Certain API-Service query endpoints support pagination and sorting through the use of query parameters.</p> <p><b>Pagination query parameters:</b></p> <ul>     <li>pageSize: number between 1 and 1000 specifying how many items to return for each page (if available).         If unspecified, the default is 50.</li>     <li>pageNumber: number specifying what page of data to retrieve, starting from 1 as the first page.         If unspecified, the default is 1.</li> </ul> <p>A paginated response contains several related fields, such as pageSize, pageNumber, itemCount, totalItems,     totalPages, _links (first, last, previous and next pages) and _warning (containing any warning messages,     if present).</p> <p><b>Sorting query parameters:</b></p> <ul>     <li>sortBy: the name of the field to sort the results by. If unspecified, no sorting is applied.</li>     <li>sortOrder: the case insensitive sorting direction supporting ASC/ASCENDING/NATURAL and         DESC/DESCENDING/REVERSE. If unspecified, the default is ASC.</li> </ul> <h3>API Rate Limiting</h3> <p>The API-Service endpoints are rate limited to ensure the stability, availability and performance of     the overall system.</p> <p>Upon reaching such a rate limit, the endpoints return HTTP Status 429 - Too Many Requests.</p> <p>The system will accept further requests once existing in-flight requests are completed.</p> 
+<h3>API Access</h3> <p>In order to use the API-Service endpoints, ensure the following prerequisites are met:</p> <ol>     <li>User is created in N-central with appropriate permissions and configuration         (roles, access groups, MFA disabled, 2FA disabled).</li>     <li>API access is set up in N-central by having a JWT         (Json Web Token, referred to as \"N-central User-API Token\") generated,         acting as the permanent secret solely used for fetching access and refresh tokens.</li> </ol> <p>To access the API-Service endpoints, the JWT must first be exchanged with access and refresh tokens:</p> <ul>     <li>         <p><b>Using Swagger UI:</b></p>         <ol>             <li>Click on the <b>\"Authorize\"</b> button and enter the JWT into the value field                 under <b>\"N-central User-API Token (JWT)\"</b>, then navigate to                 the <code>/api/auth/authenticate</code> endpoint, click <b>\"Try it out\"</b>                 and then <b>\"Execute\"</b>.                 <br/>The new “Access Token” and “Refresh Token” fields will be available in the “Server Response”                 section below. Note that the expiry is 3600s ( 1h ). Copy the value of the access token.</li>             <li>Click on the <b>lock icon</b> to the right of any endpoint                 (or the <b>\"Authorize\"</b> button at the top), enter the access token in the                 <b>\"API-Access Token\"</b> field and click <b>\"Authorize\"</b>.</li>             <li>To call an API-Service endpoint, navigate to it, click <b>\"Try it out\"</b> button and             then <b>\"Execute\"</b>. If the steps above were successful, the access token is included in requests             automatically.</li>         </ol>     </li>     <li>         <p><b>Using a different HTTP client:</b></p>         <ol>             <li>Call the <code>/api/auth/authenticate</code> endpoint.                 The JWT token must be specified under the <code>Authorization</code> header,                 in the form <code>Bearer &lt;YOUR_JWT&gt;\"</code>.                 <br/>The access and refresh tokens are present in the response.</li>             <li>When calling API-Service endpoints, make sure to specify the <b>access token</b> in             the <code>Authorization</code> header as <code>Bearer &lt;ACCESS_TOKEN&gt;</code>.</li>         </ol>     </li> </ul> <h3>API Pagination & Sorting</h3> <p>Certain API-Service query endpoints support pagination and sorting through the use of query parameters.</p> <p><b>Pagination query parameters:</b></p> <ul>     <li>pageSize: number between 1 and 1000 specifying how many items to return for each page (if available).         If unspecified, the default is 50.</li>     <li>pageNumber: number specifying what page of data to retrieve, starting from 1 as the first page.         If unspecified, the default is 1.</li> </ul> <p>A paginated response contains several related fields, such as pageSize, pageNumber, itemCount, totalItems,     totalPages, _links (first, last, previous and next pages) and _warning (containing any warning messages,     if present).</p> <p><b>Sorting query parameters:</b></p> <ul>     <li>sortBy: the name of the field to sort the results by. If unspecified, no sorting is applied.</li>     <li>sortOrder: the case insensitive sorting direction supporting ASC/ASCENDING/NATURAL and         DESC/DESCENDING/REVERSE. If unspecified, the default is ASC.</li> </ul> <h3>API Rate Limiting</h3> <p>The API-Service endpoints are rate limited to ensure the stability, availability and performance of     the overall system.</p> <p>Upon reaching such a rate limit, the endpoints return HTTP Status 429 - Too Many Requests.</p> <p>The system will accept further requests once existing in-flight requests are completed.</p>
 
 API version: 1.0
 */
@@ -19,14 +19,13 @@ import (
 	"strings"
 )
 
-
 // CustomPropertiesAPIService CustomPropertiesAPI service
 type CustomPropertiesAPIService service
 
 type ApiGetCustomPropertyRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *CustomPropertiesAPIService
-	orgUnitId int32
+	orgUnitId  int32
 	propertyId int32
 }
 
@@ -39,28 +38,29 @@ GetCustomProperty PREVIEW: Get the organization unit custom property.
 
 Get the organization unit  custom property for the given organization unit id and property id.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param orgUnitId The organization unit id.
- @param propertyId The property id.
- @return ApiGetCustomPropertyRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param orgUnitId The organization unit id.
+	@param propertyId The property id.
+	@return ApiGetCustomPropertyRequest
 */
 func (a *CustomPropertiesAPIService) GetCustomProperty(ctx context.Context, orgUnitId int32, propertyId int32) ApiGetCustomPropertyRequest {
 	return ApiGetCustomPropertyRequest{
 		ApiService: a,
-		ctx: ctx,
-		orgUnitId: orgUnitId,
+		ctx:        ctx,
+		orgUnitId:  orgUnitId,
 		propertyId: propertyId,
 	}
 }
 
 // Execute executes the request
-//  @return DefaultCustomProperty
+//
+//	@return DefaultCustomProperty
 func (a *CustomPropertiesAPIService) GetCustomPropertyExecute(r ApiGetCustomPropertyRequest) (*DefaultCustomProperty, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *DefaultCustomProperty
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *DefaultCustomProperty
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CustomPropertiesAPIService.GetCustomProperty")
@@ -122,8 +122,8 @@ func (a *CustomPropertiesAPIService) GetCustomPropertyExecute(r ApiGetCustomProp
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -133,8 +133,8 @@ func (a *CustomPropertiesAPIService) GetCustomPropertyExecute(r ApiGetCustomProp
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
@@ -144,8 +144,8 @@ func (a *CustomPropertiesAPIService) GetCustomPropertyExecute(r ApiGetCustomProp
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
@@ -155,8 +155,8 @@ func (a *CustomPropertiesAPIService) GetCustomPropertyExecute(r ApiGetCustomProp
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
@@ -166,8 +166,8 @@ func (a *CustomPropertiesAPIService) GetCustomPropertyExecute(r ApiGetCustomProp
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -186,9 +186,9 @@ func (a *CustomPropertiesAPIService) GetCustomPropertyExecute(r ApiGetCustomProp
 }
 
 type ApiGetDeviceCustomPropertyRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *CustomPropertiesAPIService
-	deviceId int32
+	deviceId   int32
 	propertyId int32
 }
 
@@ -201,28 +201,29 @@ GetDeviceCustomProperty PREVIEW: Get the device custom property.
 
 Get the device custom property for the given device id and property id.<br/><b>NOTE:</b>This endpoint is currently in a preview stage.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param deviceId The device id.
- @param propertyId The property id.
- @return ApiGetDeviceCustomPropertyRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param deviceId The device id.
+	@param propertyId The property id.
+	@return ApiGetDeviceCustomPropertyRequest
 */
 func (a *CustomPropertiesAPIService) GetDeviceCustomProperty(ctx context.Context, deviceId int32, propertyId int32) ApiGetDeviceCustomPropertyRequest {
 	return ApiGetDeviceCustomPropertyRequest{
 		ApiService: a,
-		ctx: ctx,
-		deviceId: deviceId,
+		ctx:        ctx,
+		deviceId:   deviceId,
 		propertyId: propertyId,
 	}
 }
 
 // Execute executes the request
-//  @return OrganizationCustomProperty
+//
+//	@return OrganizationCustomProperty
 func (a *CustomPropertiesAPIService) GetDeviceCustomPropertyExecute(r ApiGetDeviceCustomPropertyRequest) (*OrganizationCustomProperty, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *OrganizationCustomProperty
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *OrganizationCustomProperty
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CustomPropertiesAPIService.GetDeviceCustomProperty")
@@ -284,8 +285,8 @@ func (a *CustomPropertiesAPIService) GetDeviceCustomPropertyExecute(r ApiGetDevi
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -295,8 +296,8 @@ func (a *CustomPropertiesAPIService) GetDeviceCustomPropertyExecute(r ApiGetDevi
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
@@ -306,8 +307,8 @@ func (a *CustomPropertiesAPIService) GetDeviceCustomPropertyExecute(r ApiGetDevi
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
@@ -317,8 +318,8 @@ func (a *CustomPropertiesAPIService) GetDeviceCustomPropertyExecute(r ApiGetDevi
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
@@ -328,8 +329,8 @@ func (a *CustomPropertiesAPIService) GetDeviceCustomPropertyExecute(r ApiGetDevi
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -348,9 +349,9 @@ func (a *CustomPropertiesAPIService) GetDeviceCustomPropertyExecute(r ApiGetDevi
 }
 
 type ApiGetDeviceDefaultCustomPropertyRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *CustomPropertiesAPIService
-	orgUnitId string
+	orgUnitId  string
 	propertyId string
 }
 
@@ -363,28 +364,29 @@ GetDeviceDefaultCustomProperty PREVIEW: Retrieve Device Default Custom Property 
 
 Retrieves default custom properties information<br/><b>NOTE:</b>This endpoint is currently in a preview stage.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param orgUnitId ID of the organization unit for which information needs to be fetched
- @param propertyId ID of the property for which information needs to be fetched
- @return ApiGetDeviceDefaultCustomPropertyRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param orgUnitId ID of the organization unit for which information needs to be fetched
+	@param propertyId ID of the property for which information needs to be fetched
+	@return ApiGetDeviceDefaultCustomPropertyRequest
 */
 func (a *CustomPropertiesAPIService) GetDeviceDefaultCustomProperty(ctx context.Context, orgUnitId string, propertyId string) ApiGetDeviceDefaultCustomPropertyRequest {
 	return ApiGetDeviceDefaultCustomPropertyRequest{
 		ApiService: a,
-		ctx: ctx,
-		orgUnitId: orgUnitId,
+		ctx:        ctx,
+		orgUnitId:  orgUnitId,
 		propertyId: propertyId,
 	}
 }
 
 // Execute executes the request
-//  @return DeviceCustomPropertyResponse
+//
+//	@return DeviceCustomPropertyResponse
 func (a *CustomPropertiesAPIService) GetDeviceDefaultCustomPropertyExecute(r ApiGetDeviceDefaultCustomPropertyRequest) (*DeviceCustomPropertyResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *DeviceCustomPropertyResponse
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *DeviceCustomPropertyResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CustomPropertiesAPIService.GetDeviceDefaultCustomProperty")
@@ -446,8 +448,8 @@ func (a *CustomPropertiesAPIService) GetDeviceDefaultCustomPropertyExecute(r Api
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -457,8 +459,8 @@ func (a *CustomPropertiesAPIService) GetDeviceDefaultCustomPropertyExecute(r Api
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
@@ -468,8 +470,8 @@ func (a *CustomPropertiesAPIService) GetDeviceDefaultCustomPropertyExecute(r Api
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
@@ -479,8 +481,8 @@ func (a *CustomPropertiesAPIService) GetDeviceDefaultCustomPropertyExecute(r Api
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
@@ -490,8 +492,8 @@ func (a *CustomPropertiesAPIService) GetDeviceDefaultCustomPropertyExecute(r Api
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -510,9 +512,9 @@ func (a *CustomPropertiesAPIService) GetDeviceDefaultCustomPropertyExecute(r Api
 }
 
 type ApiGetOrganizationUnitPropertyRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *CustomPropertiesAPIService
-	orgUnitId int32
+	orgUnitId  int32
 	propertyId int32
 }
 
@@ -525,28 +527,29 @@ GetOrganizationUnitProperty PREVIEW: Get the organization unit custom property.
 
 Get the organization unit custom property for the given organization unit id and property id.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param orgUnitId The organization unit id.
- @param propertyId The property id.
- @return ApiGetOrganizationUnitPropertyRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param orgUnitId The organization unit id.
+	@param propertyId The property id.
+	@return ApiGetOrganizationUnitPropertyRequest
 */
 func (a *CustomPropertiesAPIService) GetOrganizationUnitProperty(ctx context.Context, orgUnitId int32, propertyId int32) ApiGetOrganizationUnitPropertyRequest {
 	return ApiGetOrganizationUnitPropertyRequest{
 		ApiService: a,
-		ctx: ctx,
-		orgUnitId: orgUnitId,
+		ctx:        ctx,
+		orgUnitId:  orgUnitId,
 		propertyId: propertyId,
 	}
 }
 
 // Execute executes the request
-//  @return OrganizationCustomProperty
+//
+//	@return OrganizationCustomProperty
 func (a *CustomPropertiesAPIService) GetOrganizationUnitPropertyExecute(r ApiGetOrganizationUnitPropertyRequest) (*OrganizationCustomProperty, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *OrganizationCustomProperty
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *OrganizationCustomProperty
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CustomPropertiesAPIService.GetOrganizationUnitProperty")
@@ -608,8 +611,8 @@ func (a *CustomPropertiesAPIService) GetOrganizationUnitPropertyExecute(r ApiGet
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -619,8 +622,8 @@ func (a *CustomPropertiesAPIService) GetOrganizationUnitPropertyExecute(r ApiGet
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
@@ -630,8 +633,8 @@ func (a *CustomPropertiesAPIService) GetOrganizationUnitPropertyExecute(r ApiGet
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
@@ -641,8 +644,8 @@ func (a *CustomPropertiesAPIService) GetOrganizationUnitPropertyExecute(r ApiGet
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
@@ -652,8 +655,8 @@ func (a *CustomPropertiesAPIService) GetOrganizationUnitPropertyExecute(r ApiGet
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -672,14 +675,14 @@ func (a *CustomPropertiesAPIService) GetOrganizationUnitPropertyExecute(r ApiGet
 }
 
 type ApiListCustomerPropertiesRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *CustomPropertiesAPIService
-	orgUnitId int32
+	orgUnitId  int32
 	pageNumber *int32
-	pageSize *int32
-	select_ *string
-	sortBy *string
-	sortOrder *string
+	pageSize   *int32
+	select_    *string
+	sortBy     *string
+	sortOrder  *string
 }
 
 // The page number to retrieve. Starts at 1. If not provided, defaults to the first page.
@@ -721,26 +724,27 @@ ListCustomerProperties PREVIEW: Get the list of organization custom properties.
 
 Get the list of organization unit custom properties for the given organization unit id.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param orgUnitId The organization unit id.
- @return ApiListCustomerPropertiesRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param orgUnitId The organization unit id.
+	@return ApiListCustomerPropertiesRequest
 */
 func (a *CustomPropertiesAPIService) ListCustomerProperties(ctx context.Context, orgUnitId int32) ApiListCustomerPropertiesRequest {
 	return ApiListCustomerPropertiesRequest{
 		ApiService: a,
-		ctx: ctx,
-		orgUnitId: orgUnitId,
+		ctx:        ctx,
+		orgUnitId:  orgUnitId,
 	}
 }
 
 // Execute executes the request
-//  @return ListResponseOrganizationCustomProperty
+//
+//	@return ListResponseOrganizationCustomProperty
 func (a *CustomPropertiesAPIService) ListCustomerPropertiesExecute(r ApiListCustomerPropertiesRequest) (*ListResponseOrganizationCustomProperty, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *ListResponseOrganizationCustomProperty
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *ListResponseOrganizationCustomProperty
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CustomPropertiesAPIService.ListCustomerProperties")
@@ -819,8 +823,8 @@ func (a *CustomPropertiesAPIService) ListCustomerPropertiesExecute(r ApiListCust
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -830,8 +834,8 @@ func (a *CustomPropertiesAPIService) ListCustomerPropertiesExecute(r ApiListCust
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
@@ -841,8 +845,8 @@ func (a *CustomPropertiesAPIService) ListCustomerPropertiesExecute(r ApiListCust
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
@@ -852,8 +856,8 @@ func (a *CustomPropertiesAPIService) ListCustomerPropertiesExecute(r ApiListCust
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
@@ -863,8 +867,8 @@ func (a *CustomPropertiesAPIService) ListCustomerPropertiesExecute(r ApiListCust
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -883,9 +887,9 @@ func (a *CustomPropertiesAPIService) ListCustomerPropertiesExecute(r ApiListCust
 }
 
 type ApiListDeviceCustomPropertiesRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *CustomPropertiesAPIService
-	deviceId string
+	deviceId   string
 }
 
 func (r ApiListDeviceCustomPropertiesRequest) Execute() (*ListResponseDeviceCustomProperty, *http.Response, error) {
@@ -897,26 +901,27 @@ ListDeviceCustomProperties PREVIEW: Retrieve Device Custom Properties by device 
 
 Retrieves custom properties list for a device.<br/><b>NOTE:</b>This endpoint is currently in a preview stage.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param deviceId ID of the device for which information needs to be fetched
- @return ApiListDeviceCustomPropertiesRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param deviceId ID of the device for which information needs to be fetched
+	@return ApiListDeviceCustomPropertiesRequest
 */
 func (a *CustomPropertiesAPIService) ListDeviceCustomProperties(ctx context.Context, deviceId string) ApiListDeviceCustomPropertiesRequest {
 	return ApiListDeviceCustomPropertiesRequest{
 		ApiService: a,
-		ctx: ctx,
-		deviceId: deviceId,
+		ctx:        ctx,
+		deviceId:   deviceId,
 	}
 }
 
 // Execute executes the request
-//  @return ListResponseDeviceCustomProperty
+//
+//	@return ListResponseDeviceCustomProperty
 func (a *CustomPropertiesAPIService) ListDeviceCustomPropertiesExecute(r ApiListDeviceCustomPropertiesRequest) (*ListResponseDeviceCustomProperty, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *ListResponseDeviceCustomProperty
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *ListResponseDeviceCustomProperty
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CustomPropertiesAPIService.ListDeviceCustomProperties")
@@ -977,8 +982,8 @@ func (a *CustomPropertiesAPIService) ListDeviceCustomPropertiesExecute(r ApiList
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -988,8 +993,8 @@ func (a *CustomPropertiesAPIService) ListDeviceCustomPropertiesExecute(r ApiList
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
@@ -999,8 +1004,8 @@ func (a *CustomPropertiesAPIService) ListDeviceCustomPropertiesExecute(r ApiList
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
@@ -1010,8 +1015,8 @@ func (a *CustomPropertiesAPIService) ListDeviceCustomPropertiesExecute(r ApiList
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
@@ -1021,8 +1026,8 @@ func (a *CustomPropertiesAPIService) ListDeviceCustomPropertiesExecute(r ApiList
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -1041,9 +1046,9 @@ func (a *CustomPropertiesAPIService) ListDeviceCustomPropertiesExecute(r ApiList
 }
 
 type ApiModifyDefaultOrganizationUnitPropertyRequest struct {
-	ctx context.Context
-	ApiService *CustomPropertiesAPIService
-	orgUnitId int32
+	ctx                                context.Context
+	ApiService                         *CustomPropertiesAPIService
+	orgUnitId                          int32
 	defaultCustomPropertyModifyRequest *DefaultCustomPropertyModifyRequest
 }
 
@@ -1062,24 +1067,24 @@ ModifyDefaultOrganizationUnitProperty PREVIEW: Update the default organization u
 
 Update the default organization unit custom property for the given organization unit id and property id.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param orgUnitId The organization unit id.
- @return ApiModifyDefaultOrganizationUnitPropertyRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param orgUnitId The organization unit id.
+	@return ApiModifyDefaultOrganizationUnitPropertyRequest
 */
 func (a *CustomPropertiesAPIService) ModifyDefaultOrganizationUnitProperty(ctx context.Context, orgUnitId int32) ApiModifyDefaultOrganizationUnitPropertyRequest {
 	return ApiModifyDefaultOrganizationUnitPropertyRequest{
 		ApiService: a,
-		ctx: ctx,
-		orgUnitId: orgUnitId,
+		ctx:        ctx,
+		orgUnitId:  orgUnitId,
 	}
 }
 
 // Execute executes the request
 func (a *CustomPropertiesAPIService) ModifyDefaultOrganizationUnitPropertyExecute(r ApiModifyDefaultOrganizationUnitPropertyRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPut
-		localVarPostBody     interface{}
-		formFiles            []formFile
+		localVarHTTPMethod = http.MethodPut
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CustomPropertiesAPIService.ModifyDefaultOrganizationUnitProperty")
@@ -1145,8 +1150,8 @@ func (a *CustomPropertiesAPIService) ModifyDefaultOrganizationUnitPropertyExecut
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -1156,8 +1161,8 @@ func (a *CustomPropertiesAPIService) ModifyDefaultOrganizationUnitPropertyExecut
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
@@ -1167,8 +1172,8 @@ func (a *CustomPropertiesAPIService) ModifyDefaultOrganizationUnitPropertyExecut
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
@@ -1178,8 +1183,8 @@ func (a *CustomPropertiesAPIService) ModifyDefaultOrganizationUnitPropertyExecut
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
@@ -1189,8 +1194,8 @@ func (a *CustomPropertiesAPIService) ModifyDefaultOrganizationUnitPropertyExecut
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		return localVarHTTPResponse, newErr
@@ -1200,10 +1205,10 @@ func (a *CustomPropertiesAPIService) ModifyDefaultOrganizationUnitPropertyExecut
 }
 
 type ApiModifyDevicePropertyRequest struct {
-	ctx context.Context
-	ApiService *CustomPropertiesAPIService
-	deviceId string
-	propertyId string
+	ctx                              context.Context
+	ApiService                       *CustomPropertiesAPIService
+	deviceId                         string
+	propertyId                       string
 	deviceCustomPropertyModification *DeviceCustomPropertyModification
 }
 
@@ -1222,28 +1227,29 @@ ModifyDeviceProperty PREVIEW: Modify Device Custom Property
 
 Modifies one custom property for a device.<br/><b>NOTE:</b>This endpoint is currently in a preview stage.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param deviceId Device ID to update property for.
- @param propertyId Custom property ID that is associated with the device.
- @return ApiModifyDevicePropertyRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param deviceId Device ID to update property for.
+	@param propertyId Custom property ID that is associated with the device.
+	@return ApiModifyDevicePropertyRequest
 */
 func (a *CustomPropertiesAPIService) ModifyDeviceProperty(ctx context.Context, deviceId string, propertyId string) ApiModifyDevicePropertyRequest {
 	return ApiModifyDevicePropertyRequest{
 		ApiService: a,
-		ctx: ctx,
-		deviceId: deviceId,
+		ctx:        ctx,
+		deviceId:   deviceId,
 		propertyId: propertyId,
 	}
 }
 
 // Execute executes the request
-//  @return DevicePropertyUpdated
+//
+//	@return DevicePropertyUpdated
 func (a *CustomPropertiesAPIService) ModifyDevicePropertyExecute(r ApiModifyDevicePropertyRequest) (*DevicePropertyUpdated, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPut
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *DevicePropertyUpdated
+		localVarHTTPMethod  = http.MethodPut
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *DevicePropertyUpdated
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CustomPropertiesAPIService.ModifyDeviceProperty")
@@ -1310,8 +1316,8 @@ func (a *CustomPropertiesAPIService) ModifyDevicePropertyExecute(r ApiModifyDevi
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -1321,8 +1327,8 @@ func (a *CustomPropertiesAPIService) ModifyDevicePropertyExecute(r ApiModifyDevi
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
@@ -1332,8 +1338,8 @@ func (a *CustomPropertiesAPIService) ModifyDevicePropertyExecute(r ApiModifyDevi
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
@@ -1343,8 +1349,8 @@ func (a *CustomPropertiesAPIService) ModifyDevicePropertyExecute(r ApiModifyDevi
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
@@ -1354,8 +1360,8 @@ func (a *CustomPropertiesAPIService) ModifyDevicePropertyExecute(r ApiModifyDevi
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -1374,10 +1380,10 @@ func (a *CustomPropertiesAPIService) ModifyDevicePropertyExecute(r ApiModifyDevi
 }
 
 type ApiModifyOrganizationUnitPropertyValueRequest struct {
-	ctx context.Context
-	ApiService *CustomPropertiesAPIService
-	orgUnitId int32
-	propertyId int32
+	ctx                               context.Context
+	ApiService                        *CustomPropertiesAPIService
+	orgUnitId                         int32
+	propertyId                        int32
 	orgUnitCustomPropertyModification *OrgUnitCustomPropertyModification
 }
 
@@ -1396,28 +1402,29 @@ ModifyOrganizationUnitPropertyValue PREVIEW: Update the organization unit custom
 
 Update the organization unit custom property for the given organization unit id and property id.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param orgUnitId The organization unit id.
- @param propertyId The property id.
- @return ApiModifyOrganizationUnitPropertyValueRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param orgUnitId The organization unit id.
+	@param propertyId The property id.
+	@return ApiModifyOrganizationUnitPropertyValueRequest
 */
 func (a *CustomPropertiesAPIService) ModifyOrganizationUnitPropertyValue(ctx context.Context, orgUnitId int32, propertyId int32) ApiModifyOrganizationUnitPropertyValueRequest {
 	return ApiModifyOrganizationUnitPropertyValueRequest{
 		ApiService: a,
-		ctx: ctx,
-		orgUnitId: orgUnitId,
+		ctx:        ctx,
+		orgUnitId:  orgUnitId,
 		propertyId: propertyId,
 	}
 }
 
 // Execute executes the request
-//  @return OrganizationPropertyUpdated
+//
+//	@return OrganizationPropertyUpdated
 func (a *CustomPropertiesAPIService) ModifyOrganizationUnitPropertyValueExecute(r ApiModifyOrganizationUnitPropertyValueRequest) (*OrganizationPropertyUpdated, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPut
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *OrganizationPropertyUpdated
+		localVarHTTPMethod  = http.MethodPut
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *OrganizationPropertyUpdated
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CustomPropertiesAPIService.ModifyOrganizationUnitPropertyValue")
@@ -1484,8 +1491,8 @@ func (a *CustomPropertiesAPIService) ModifyOrganizationUnitPropertyValueExecute(
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -1495,8 +1502,8 @@ func (a *CustomPropertiesAPIService) ModifyOrganizationUnitPropertyValueExecute(
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
@@ -1506,8 +1513,8 @@ func (a *CustomPropertiesAPIService) ModifyOrganizationUnitPropertyValueExecute(
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
@@ -1517,8 +1524,8 @@ func (a *CustomPropertiesAPIService) ModifyOrganizationUnitPropertyValueExecute(
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
@@ -1528,8 +1535,8 @@ func (a *CustomPropertiesAPIService) ModifyOrganizationUnitPropertyValueExecute(
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
