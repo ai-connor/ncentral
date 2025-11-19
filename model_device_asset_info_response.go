@@ -46,17 +46,17 @@ func NewDeviceAssetInfoResponseWithDefaults() *DeviceAssetInfoResponse {
 }
 
 // GetData returns the Data field value if set, zero value otherwise.
-func (o *DeviceAssetInfoResponse) GetData() map[string]map[string]map[string]interface{} {
+func (o *DeviceAssetInfoResponse) GetData() any {
 	if o == nil || IsNil(o.Data) {
-		var ret map[string]map[string]map[string]interface{}
+		var ret map[string]any
 		return ret
 	}
-	return *o.Data
+	return o.Data
 }
 
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *DeviceAssetInfoResponse) GetDataOk() (*map[string]map[string]map[string]interface{}, bool) {
+func (o *DeviceAssetInfoResponse) GetDataOk() (any, bool) {
 	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
