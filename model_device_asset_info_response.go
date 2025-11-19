@@ -20,7 +20,7 @@ var _ MappedNullable = &DeviceAssetInfoResponse{}
 // DeviceAssetInfoResponse Represents a device asset info response. It contains the asset information about the device in the form of following categories : 1. os 2. application 3. computersystem 4. networkadapter 5. device 6. processor  The above categories are classified as \"default\" categories and the fields under these categories are considered   as \"default\" fields.  The default fields are considered definitive and are expected to be present at all times. If a default field is missing,   it indicates that information about that specific field for the device is unavailable.  The \"_extra\" part of the response contains all available asset categories and fields.  The extra categories and fields provide supplementary information about the device asset. These details are optional and may or may not be available in the future. Additionally, certain fields from the \"_extra\" categories or fields might transition to become default categories or fields in the future.
 type DeviceAssetInfoResponse struct {
 	// Asset Information about the device.
-	Data *map[string]map[string]map[string]interface{} `json:"data,omitempty"`
+	Data any `json:"data,omitempty"`
 	// Links to related endpoints.
 	Links                *map[string]string `json:"_links,omitempty"`
 	AdditionalProperties map[string]interface{}
